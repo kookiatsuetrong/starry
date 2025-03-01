@@ -1,3 +1,5 @@
+package starry;
+
 import java.lang.reflect.Method;
 import javafx.application.Application;
 import javafx.stage.Stage;
@@ -5,7 +7,7 @@ import javafx.scene.Scene;
 import javafx.scene.layout.VBox;
 import javafx.scene.web.WebView;
 
-abstract class StarryApp extends Application {
+public abstract class StarryApp extends Application {
 	WebView page = new WebView();
 	
 	@Override
@@ -28,7 +30,7 @@ abstract class StarryApp extends Application {
 		return o != null;
 	}
 	
-	void go(String location) {
+	public void load(String location) {
 		page.getEngine().load(location);
 	}
 	

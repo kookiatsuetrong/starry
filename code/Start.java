@@ -1,10 +1,12 @@
+import starry.StarryApp;
+
 public class Start extends StarryApp {
 	
 	public void main() {
-		go("https://google.com");
+		load("https://google.com");
 	}
 }
-	
+
 /*
 javac --class-path "code"          \
 	--module-path "./javafx/lib"   \
