@@ -11,8 +11,8 @@ abstract class StarryApp extends Application {
 	@Override
 	public void start(Stage stage) throws Exception {
 
-		Class<?> cls = this.getClass();
-		Method main = cls.getMethod("main");		
+		Class<?> instance = this.getClass();
+		Method main = instance.getMethod("main");		
 		if (valid(main)) {
 			main.invoke(this);
 		}
