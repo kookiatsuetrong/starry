@@ -1,10 +1,36 @@
 import starry.StarryApp;
+/*
+import javafx.application.Application;
+import javafx.application.Platform;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
+import javafx.concurrent.Worker.State;
+import javafx.event.EventType;
+
+import javafx.scene.web.WebView;
+import javafx.scene.web.WebEngine;
+
+import netscape.javascript.JSObject;
+
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.events.Event;
+import org.w3c.dom.events.EventListener;
+import org.w3c.dom.events.EventTarget;
+import org.w3c.dom.html.HTMLInputElement;
+*/
 
 public class Start extends StarryApp {
 	
 	public void main() {
 		loadContent(content);
 	}
+
+	public void setup() {
+		setAction("love-button", e -> System.out.println("Love") );
+		setAction("hate-button", e -> System.out.println("Hate") );
+	}
+
 	
 	String content = 
 	"""
@@ -34,18 +60,18 @@ public class Start extends StarryApp {
 }
 
 /*
-javac --class-path "code"          \
-	--module-path "./javafx/lib"   \
-	--add-modules javafx.controls  \
-	--add-modules javafx.web       \
-	code/Start.java
+javac --class-path "code"      \
+--module-path "./javafx/lib"   \
+--add-modules javafx.controls  \
+--add-modules javafx.web       \
+code/Start.java
 	
 	
-java --class-path "code" \
-	--module-path "./javafx/lib" \
-	--add-modules javafx.controls  \
-	--add-modules javafx.web       \
-	Start
+java --class-path "code"       \
+--module-path "./javafx/lib"   \
+--add-modules javafx.controls  \
+--add-modules javafx.web       \
+Start
 
 javac --class-path "code"      ^
 --module-path "javafx\lib"     ^
