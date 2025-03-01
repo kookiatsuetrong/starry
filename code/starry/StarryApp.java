@@ -13,16 +13,19 @@ public abstract class StarryApp extends Application {
 	@Override
 	public void start(Stage stage) throws Exception {
 
+		
+		VBox box = new VBox(page);
+		Scene scene = new Scene(box, 480, 360);
+		stage.setScene(scene);
+		stage.setTitle("Starry");
+		
+		
 		Class<?> instance = this.getClass();
 		Method main = instance.getMethod("main");		
 		if (valid(main)) {
 			main.invoke(this);
 		}
 		
-		VBox box = new VBox(page);
-		Scene scene = new Scene(box, 480, 360);
-		stage.setScene(scene);
-		stage.setTitle("Starry");
 		stage.show();
 	}
 	
@@ -32,6 +35,14 @@ public abstract class StarryApp extends Application {
 	
 	public void load(String location) {
 		page.getEngine().load(location);
+	}
+	
+	public void loadContent(String content) {
+		page.getEngine().loadContent(content);
+	}
+	
+	public void loadContent(String content, String type) {
+		page.getEngine().loadContent(content, type);
 	}
 	
 	// abstract void main();
