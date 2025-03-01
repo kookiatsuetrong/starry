@@ -10,21 +10,22 @@ abstract class StarryApp extends Application {
 	
 	@Override
 	public void start(Stage stage) throws Exception {
-		VBox box = new VBox(page);
-		Scene scene = new Scene(box, 960, 600);
-		stage.setScene(scene);
-		stage.setTitle("Title");
-		stage.show();
 
-		Class<?> c = this.getClass();
-		Method main = c.getMethod("main");		
+		Class<?> cls = this.getClass();
+		Method main = cls.getMethod("main");		
 		if (valid(main)) {
 			main.invoke(this);
 		}
+		
+		VBox box = new VBox(page);
+		Scene scene = new Scene(box, 480, 360);
+		stage.setScene(scene);
+		stage.setTitle("Starry");
+		stage.show();
 	}
 	
 	boolean valid(Object o) {
-		return o == null ? false : true;
+		return o != null;
 	}
 	
 	void go(String location) {
