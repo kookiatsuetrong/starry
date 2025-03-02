@@ -17,24 +17,65 @@ public class Start extends StarryApp {
 }
 ```
 
-Compiling
+Unix BASH commands
 
 ```bash
-javac --class-path "code"          \
-	--module-path "./javafx/lib"   \
-	--add-modules javafx.controls  \
-	--add-modules javafx.web       \
-	code/Start.java
+javac --class-path "code"      \
+--module-path "./javafx/lib"   \
+--add-modules javafx.controls  \
+--add-modules javafx.web       \
+code/Start.java
+
+java --class-path "code"       \
+--module-path "./javafx/lib"   \
+--add-modules javafx.controls  \
+--add-modules javafx.web       \
+Start
 ```
 
-Running
+Windows commands
+```
+javac --class-path "code"      ^
+--module-path "javafx\lib"     ^
+--add-modules javafx.controls  ^
+--add-modules javafx.web       ^
+code\Start.java
 
-```bash
-java --class-path "code" \
-	--module-path "./javafx/lib" \
-	--add-modules javafx.controls  \
-	--add-modules javafx.web       \
-	Start
+java --class-path "code"       ^
+--module-path "javafx\lib"     ^
+--add-modules javafx.controls  ^
+--add-modules javafx.web       ^
+Start
+```
+
+Simple app with event handling.
+```java
+import starry.StarryApp;
+import javafx.application.Platform;
+import org.w3c.dom.events.Event;
+
+public class Start extends StarryApp {
+	
+	public void main() {
+		loadContent(content);
+	}
+	
+	public void setup() {
+		setAction("sample-button", e -> exit(e) );
+	}
+	
+	void exit(Event event) {
+		Platform.exit();
+	}
+	
+	String content = 
+	"""
+	<body>
+		<button id="sample-button">Exit</button>
+	</body>
+	""";
+}
+
 ```
 
 Example app with event handling and CSS.

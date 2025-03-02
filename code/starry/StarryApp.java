@@ -1,21 +1,19 @@
 package starry;
 
 import java.lang.reflect.Method;
+
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.stage.Stage;
 import javafx.scene.Scene;
 import javafx.scene.layout.VBox;
 import javafx.scene.web.WebView;
+import javafx.scene.web.WebEngine;
 
-import javafx.application.Application;
-import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.concurrent.Worker.State;
 import javafx.event.EventType;
-
-import javafx.scene.web.WebView;
-import javafx.scene.web.WebEngine;
 
 import netscape.javascript.JSObject;
 
@@ -36,11 +34,8 @@ public abstract class StarryApp extends Application {
 
 	public WebView page = new WebView();
 
-
-
 	public void setAction(String selector, EventListener listener) {
-		Document document = page.getEngine()
-					.getDocument();
+		Document document = page.getEngine().getDocument();
 		Element element = document.getElementById(selector);
 		EventTarget target = (EventTarget)element;
 		target.addEventListener("click", listener, false);
@@ -51,10 +46,13 @@ public abstract class StarryApp extends Application {
 		try {
 			StarryApp.instance = this;
 
-			ChangeHandler changer = new ChangeHandler();
 			page.getEngine().getLoadWorker()
 				.stateProperty()
-				.addListener(changer);
+				.addListener((value, last, current) -> {
+					if (current == State.SUCCEEDED) {
+						initialize();
+					}
+				});
 
 			VBox box = new VBox(page);
 			Scene scene = new Scene(box, 480, 360);
@@ -71,24 +69,23 @@ public abstract class StarryApp extends Application {
 		} catch (Exception e) { }
 	}
 	
-	boolean valid(Object o) {
-		return o != null;
-	}
-	
+	// Forward to engine
 	public void load(String location) {
 		page.getEngine().load(location);
 	}
 	
+	// Forward to engine
 	public void loadContent(String content) {
 		page.getEngine().loadContent(content);
 	}
 	
+	// Forward to engine
 	public void loadContent(String content, String type) {
 		page.getEngine().loadContent(content, type);
 	}
 
+	// Call application's setup() method
 	void initialize() {
-		
 		try {
 			Class<?> instance = this.getClass();
 			Method setup = instance.getMethod("setup");
@@ -100,22 +97,8 @@ public abstract class StarryApp extends Application {
 		}
 	}
 
-}
-
-
-class ChangeHandler implements ChangeListener<State> {
-	@Override
-	public void changed(ObservableValue value,
-						State last,
-						State current) {
-		if (current == State.SUCCEEDED) {
-			StarryApp.getInstance().initialize();
-		}
-	}
-
+	// Helper method to prevent using !=
 	boolean valid(Object o) {
 		return o != null;
 	}
 }
-
-

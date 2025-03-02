@@ -1,24 +1,5 @@
 import starry.StarryApp;
-/*
-import javafx.application.Application;
 import javafx.application.Platform;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
-import javafx.concurrent.Worker.State;
-import javafx.event.EventType;
-
-import javafx.scene.web.WebView;
-import javafx.scene.web.WebEngine;
-
-import netscape.javascript.JSObject;
-
-import org.w3c.dom.events.EventListener;
-import org.w3c.dom.events.EventTarget;
-import org.w3c.dom.html.HTMLInputElement;
-*/
-
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
 import org.w3c.dom.events.Event;
 
 public class Start extends StarryApp {
@@ -28,23 +9,17 @@ public class Start extends StarryApp {
 	}
 	
 	public void setup() {
-		setAction("love-button", e -> showLove(e) );
-		setAction("hate-button", e -> showHate(e) );
-	}
-
-	void showLove(Event e) {
-		System.out.println(e);
+		setAction("sample-button", e -> exit(e) );
 	}
 	
-	void showHate(Event e) {
-		System.out.println(e);
+	void exit(Event e) {
+		Platform.exit();
 	}
 	
 	String content = 
 	"""
 	<body>
-		<button id="love-button">Love</button>
-		<button id="hate-button">Hate</button>
+		<button id="sample-button">Exit</button>
 	</body>
 	<style>
 	body {
