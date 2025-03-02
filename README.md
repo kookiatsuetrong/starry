@@ -37,7 +37,7 @@ java --class-path "code" \
 	Start
 ```
 
-Example app with CSS.
+Example app with event handling and CSS.
 
 ```java
 import starry.StarryApp;
@@ -46,6 +46,11 @@ public class Start extends StarryApp {
 	
 	public void main() {
 		loadContent(content);
+	}
+
+	public void setup() {
+		setAction("love-button", e -> System.out.println("Love") );
+		setAction("hate-button", e -> System.out.println("Hate") );
 	}
 	
 	String content = 
