@@ -78,7 +78,44 @@ public class Start extends StarryApp {
 
 ```
 
-Example app with event handling and CSS.
+Toggle Button
+
+```java
+import starry.StarryApp;
+import javafx.application.Platform;
+import org.w3c.dom.events.Event;
+import org.w3c.dom.Element;
+
+public class Start extends StarryApp {
+	
+	public void main() {
+		loadContent(content);
+	}
+	
+	public void setup() {
+		setAction("sample-button", e -> find(e) );
+	}
+	
+	void find(Event event) {
+		Element element = (Element)event.getTarget();
+		try {
+			String current = element.getTextContent();
+			String next = "Yes".equals(current) ? "No" : "Yes";
+			element.setTextContent(next);
+		} catch (Exception e) { }
+	}
+	
+	String content = 
+	"""
+	<body>
+		<button id="sample-button">Yes</button>
+	</body>
+	""";
+}
+
+```
+
+Sample app with event handling and CSS.
 
 ```java
 import starry.StarryApp;

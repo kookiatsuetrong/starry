@@ -1,6 +1,7 @@
 import starry.StarryApp;
 import javafx.application.Platform;
 import org.w3c.dom.events.Event;
+import org.w3c.dom.Element;
 
 public class Start extends StarryApp {
 	
@@ -9,17 +10,22 @@ public class Start extends StarryApp {
 	}
 	
 	public void setup() {
-		setAction("sample-button", e -> exit(e) );
+		setAction("sample-button", e -> find(e) );
 	}
 	
-	void exit(Event e) {
-		Platform.exit();
+	void find(Event event) {
+		Element element = (Element)event.getTarget();
+		try {
+			String current = element.getTextContent();
+			String next = "Yes".equals(current) ? "No" : "Yes";
+			element.setTextContent(next);
+		} catch (Exception e) { }
 	}
 	
 	String content = 
 	"""
 	<body>
-		<button id="sample-button">Exit</button>
+		<button id="sample-button">Yes</button>
 	</body>
 	<style>
 	body {
@@ -73,7 +79,8 @@ Start
 /*
 
 public interface Node {
-public String getNodeName();
+
+	public String getNodeName();
 	public String getNodeValue()
 							  throws DOMException;
 	public void setNodeValue(String nodeValue)
