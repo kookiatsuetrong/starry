@@ -1,39 +1,26 @@
 import starry.StarryApp;
-import javafx.application.Platform;
-import org.w3c.dom.events.Event;
 
 public class Start extends StarryApp {
 	
 	public void main() {
-		loadContent(content);
+		loadFile("code/main.html");
 	}
 	
 	public void setup() {
-		setAction("sample-button", e -> exit(e) );
+		setAction("refresh", e -> main() );
+		
+		String arch = System.getProperty("os.arch");
+		System.out.println(arch); // amd64
+		
+		
+		String os = System.getProperty("os.name");
+		System.out.println(os);   // Windows 11
+		
+		try {
+			getElement("report-arch")
+				.setTextContent(arch);
+			getElement("report-os")
+				.setTextContent(os);
+		} catch (Exception e) { }
 	}
-	
-	void exit(Event event) {
-		Platform.exit();
-	}
-	
-	String content = 
-	"""
-	<body>
-		<button id="sample-button">Exit</button>
-	</body>
-	<style>
-		* {
-			font-family: sans-serif;
-			outline: none;
-		}
-		button {
-			font-size: 1rem;
-			border: none;
-			border-radius: 1rem;
-			padding: .5rem 1rem;
-			background: dodgerblue;
-			color: white;
-		}
-	</style>
-	""";
 }

@@ -4,27 +4,44 @@
 		<title>Sample</title>
 	</head>
 	<body>
-		<section class="tab">
-			<a class="tab-button active" id="main-button" 
-							onclick="activateTab('main')">Main</a>
-			<a class="tab-button" id="settings-button"
-							onclick="activateTab('settings')">Settings</a>
-			<a class="tab-button" id="about-button"
-							onclick="activateTab('about')">About</a>
+		<header>
+			<a class="tab-button active"
+				id="main-button" 
+				onclick="activateTab('main')">Main</a>
+			<a class="tab-button"
+				id="settings-button"
+				onclick="activateTab('settings')">Settings</a>
+			<a class="tab-button"
+				id="about-button"
+				onclick="activateTab('about')">About</a>
+
 			<a class="tab-button" id="refresh">Refresh</a>
-		</section>
+		</header>
+		
+		<main>
+			<section class="page active" id="main-tab">
+				<p>This is the main page for application.</p>
+				
+				<input id="prompt-input" autofocus />
+				<button id="prompt-button">Ask Privately</button>
+			</section>
 
-		<section class="page active" id="main-tab">
-			<p>This is the main page</p>
-		</section>
+			<section class="page hidden" id="settings-tab">
+				<p>This is the settings page.</p>
+				<br/>
+				<button>Love</button>
+				<button>Hate</button>
+			</section>
 
-		<section class="page hidden" id="settings-tab">
-			<p>This is the settings page</p>
-		</section>
-
-		<section class="page hidden" id="about-tab">
-			<p>This is the about page</p>
-		</section>
+			<section class="page hidden" id="about-tab">
+				<p class="system-detail">Architecture:
+					<span id="report-arch"></span>
+				</p>
+				<p class="system-detail">Operating System:
+					<span id="report-os"></span>
+				</p>
+			</section>
+		</main>
 	</body>
 
 	<script>
@@ -51,9 +68,22 @@
 	* {
 		outline: none;
 		font-family: sans-serif;
+		margin: 0;
+		padding: 0;
+		border: 0;
 	}
 	body {
-
+		height: 100dvh;
+		background: #f0f4ff;
+	}
+	header {
+		height: 2rem;
+		padding-top: .5rem;
+	}
+	main {
+		height: calc(100dvh - 5rem);
+		background: #f0f4ff;
+		padding: 1rem;
 	}
 
 	button {
@@ -80,10 +110,18 @@
 		text-decoration: none;
 		font-family: sans-serif;
 	}
+	a:hover {
+		cursor: pointer;
+		border-bottom: .25rem solid #ccddff;
+	}
+	p {
+		margin-bottom: 1rem;
+	}
 
 	.tab-button {
-		margin-right: 1rem;
+		padding: 0 1rem .25rem 1rem;
 	}
+	
 	.tab-button.active {
 		border-bottom: .25rem solid dodgerblue;
 	}
@@ -96,6 +134,25 @@
 	}
 	.page.hidden {
 		display: none;
+	}
+	.system-detail {
+		color: #bbb;
+	}
+	.system-detail span {
+		color: #333;
+	}
+	#prompt-input {
+		background: #ddd;
+		border-radius: 2rem;
+		padding: 1rem 9rem 1rem 1.5rem;
+		width: calc(100% - 10.5rem);
+	}
+	#prompt-button {
+		position: absolute;
+		border-radius: 2rem;
+		right: 1.2rem;
+		margin-top: .2rem;
+		padding: .8rem 1.2rem;
 	}
 	</style>
 </html>
