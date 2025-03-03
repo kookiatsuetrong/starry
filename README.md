@@ -176,3 +176,74 @@ public class Start extends StarryApp {
 }
 ```
 
+Todo Application
+```java
+import starry.StarryApp;
+import javafx.application.Platform;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.events.Event;
+import org.w3c.dom.html.HTMLInputElement;
+
+public class Start extends StarryApp {
+	
+	public void main() {
+		loadContent(content);
+	}
+	
+	public void setup() {
+		setAction("add-button", e -> add() );
+	}
+	
+	void add() {
+		Document document = page.getEngine().getDocument();
+		HTMLInputElement input = (HTMLInputElement)document
+								.getElementById("task");
+		Element report = document.getElementById("report");
+		Element item = document.createElement("p");
+		try {
+			item.setTextContent(input.getValue());
+			report.appendChild(item);
+		} catch (Exception e) { }
+		input.setValue("");
+	}
+	
+	String content = 
+	"""
+	<body>
+		<input id="task" />
+		<button id="add-button">Add</button>
+		<section id="report"></section>
+	</body>
+	<style>
+	* {
+		outline: none;
+	}
+	body {
+		font-family: sans-serif;
+	 	padding: 1rem;
+	}
+ 	button {
+		font-family: sans-serif;
+		color: white;
+		background: dodgerblue;
+	 	padding: .5rem 1rem;
+		border: none;
+		border-radius: .35rem;
+		transition: background .25s linear;
+	}
+	button:hover {
+	 	background: steelblue;
+	}
+	input {
+		font-family: sans-serif;
+		border: none;
+		height: 2rem;
+		border-radius: .35rem;
+		padding: .25rem .5rem;
+		background: #eee;
+	}
+	</style>
+	""";
+}
+```
