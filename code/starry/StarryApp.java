@@ -36,7 +36,9 @@ public abstract class StarryApp extends Application {
 
 	public void setAction(String selector, EventListener listener) {
 		Document document = page.getEngine().getDocument();
+		if (document == null) return;
 		Element element = document.getElementById(selector);
+		if (element == null) return;
 		EventTarget target = (EventTarget)element;
 		target.addEventListener("click", listener, false);
 	}
