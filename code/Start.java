@@ -1,7 +1,8 @@
 import starry.StarryApp;
 import javafx.application.Platform;
-import org.w3c.dom.events.Event;
+import org.w3c.dom.Document;
 import org.w3c.dom.Element;
+import org.w3c.dom.events.Event;
 
 public class Start extends StarryApp {
 	
@@ -10,22 +11,27 @@ public class Start extends StarryApp {
 	}
 	
 	public void setup() {
-		setAction("sample-button", e -> find(e) );
+		setAction("love-button", e -> add("Love") );
+		setAction("hate-button", e -> add("Hate") );
 	}
 	
-	void find(Event event) {
-		Element element = (Element)event.getTarget();
+	void add(String message) {
+		Document document = page.getEngine().getDocument();
+		Element report = document.getElementById("report");
+		
+		Element item = document.createElement("p");
 		try {
-			String current = element.getTextContent();
-			String next = "Yes".equals(current) ? "No" : "Yes";
-			element.setTextContent(next);
+			item.setTextContent(message);
+			report.appendChild(item);
 		} catch (Exception e) { }
 	}
 	
 	String content = 
 	"""
 	<body>
-		<button id="sample-button">Yes</button>
+		<button id="love-button">Love</button>
+		<button id="hate-button">Hate</button>
+		<section id="report"></section>
 	</body>
 	<style>
 	body {

@@ -116,20 +116,35 @@ public class Start extends StarryApp {
 
 ```
 
-Sample app with event handling and CSS.
+Love Hate
 
 ```java
 import starry.StarryApp;
+import javafx.application.Platform;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.events.Event;
 
 public class Start extends StarryApp {
 	
 	public void main() {
 		loadContent(content);
 	}
-
+	
 	public void setup() {
-		setAction("love-button", e -> System.out.println("Love") );
-		setAction("hate-button", e -> System.out.println("Hate") );
+		setAction("love-button", e -> add("Love") );
+		setAction("hate-button", e -> add("Hate") );
+	}
+	
+	void add(String message) {
+		Document document = page.getEngine().getDocument();
+		Element report = document.getElementById("report");
+		
+		Element item = document.createElement("p");
+		try {
+			item.setTextContent(message);
+			report.appendChild(item);
+		} catch (Exception e) { }
 	}
 	
 	String content = 
@@ -137,6 +152,7 @@ public class Start extends StarryApp {
 	<body>
 		<button id="love-button">Love</button>
 		<button id="hate-button">Hate</button>
+		<section id="report"></section>
 	</body>
 	<style>
 	body {
