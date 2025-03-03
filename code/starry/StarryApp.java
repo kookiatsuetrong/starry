@@ -1,5 +1,6 @@
 package starry;
 
+import java.io.FileReader;
 import java.lang.reflect.Method;
 
 import javafx.application.Application;
@@ -87,6 +88,19 @@ public abstract class StarryApp extends Application {
 	// Forward to engine
 	public void loadContent(String content, String type) {
 		page.getEngine().loadContent(content, type);
+	}
+	
+	public void loadFile(String file) {
+		String buffer = "";
+		try {		
+			FileReader fr = new FileReader("code/main.html");
+			while (true) {
+				int k = fr.read();
+				if (k < 0) break;
+				buffer += (char)k;
+			}
+		} catch (Exception e) { }
+		loadContent(buffer);
 	}
 	
 	// Forward to getElementById()
