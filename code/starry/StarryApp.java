@@ -41,11 +41,14 @@ public abstract class StarryApp extends Application {
 		target.addEventListener("click", listener, false);
 	}
 	
+	public Stage mainStage;
+	
 	@Override
 	public void start(Stage stage) {
 		try {
 			StarryApp.instance = this;
-
+			mainStage = stage;
+			
 			page.getEngine().getLoadWorker()
 				.stateProperty()
 				.addListener((value, last, current) -> {
