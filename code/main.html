@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Sample</title>
+	</head>
+	<body>
+		<section class="tab">
+			<a class="tab-button active" id="main-button" 
+							onclick="activateTab('main')">Main</a>
+			<a class="tab-button" id="settings-button"
+							onclick="activateTab('settings')">Settings</a>
+			<a class="tab-button" id="about-button"
+							onclick="activateTab('about')">About</a>
+			<a class="tab-button" id="refresh">Refresh</a>
+		</section>
+
+		<section class="page active" id="main-tab">
+			<p>This is the main page</p>
+		</section>
+
+		<section class="page hidden" id="settings-tab">
+			<p>This is the settings page</p>
+		</section>
+
+		<section class="page hidden" id="about-tab">
+			<p>This is the about page</p>
+		</section>
+	</body>
+
+	<script>
+	activateTab("main")
+	
+	function activateTab(name) {
+		var buttons = ["main", "settings", "about"]
+		for (var i = 0; i < buttons.length; i++) {
+			document.getElementById(buttons[i] + "-tab")
+					.style.display = "none"
+			document.getElementById(buttons[i] + "-button")
+					.classList.remove("active")
+		}
+		document.getElementById(name + "-tab")
+				.style.display = "block"
+		document.getElementById(name + "-button")
+				.classList.add("active")
+		
+	}
+	
+	</script>
+	
+	<style>
+	* {
+		outline: none;
+		font-family: sans-serif;
+	}
+	body {
+
+	}
+
+	button {
+		color: white;
+		background: dodgerblue;
+		padding: .5rem 1rem;
+		border: none;
+		border-radius: .35rem;
+		transition: background .25s linear;
+		font-size: 1rem;
+	}
+	button:hover {
+		background: steelblue;
+	}
+	input {
+		border: none;
+		border-radius: .35rem;
+		padding: .5rem .5rem;
+		background: #eee;
+		font-size: 1rem;
+	}
+	a {
+		color: #333;
+		text-decoration: none;
+		font-family: sans-serif;
+	}
+
+	.tab-button {
+		margin-right: 1rem;
+	}
+	.tab-button.active {
+		border-bottom: .25rem solid #888;
+	}
+
+	.page {
+
+	}
+	.page.active {
+		display: block;
+	}
+	.page.hidden {
+		display: none;
+	}
+	</style>
+</html>
