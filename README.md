@@ -76,7 +76,6 @@ public class Start extends StarryApp {
 	</body>
 	""";
 }
-
 ```
 
 Toggle Button
@@ -113,7 +112,6 @@ public class Start extends StarryApp {
 	</body>
 	""";
 }
-
 ```
 
 Love Hate

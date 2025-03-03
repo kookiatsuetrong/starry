@@ -58,8 +58,8 @@ public class Start extends StarryApp {
 	input {
 		font-family: sans-serif;
 		border: none;
-		height: 2rem;
 		border-radius: .35rem;
+		height: 2rem;
 		padding: .25rem .5rem;
 		background: #eee;
 	}
