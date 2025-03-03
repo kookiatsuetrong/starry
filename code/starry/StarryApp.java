@@ -63,7 +63,6 @@ public abstract class StarryApp extends Application {
 			VBox box = new VBox(page);
 			Scene scene = new Scene(box, 480, 360);
 			stage.setScene(scene);
-			stage.setTitle("Starry");
 			
 			Class<?> instance = this.getClass();
 			Method main = instance.getMethod("main");		
@@ -90,10 +89,11 @@ public abstract class StarryApp extends Application {
 		page.getEngine().loadContent(content, type);
 	}
 	
+	// Load HTML data from file
 	public void loadFile(String file) {
 		String buffer = "";
 		try {		
-			FileReader fr = new FileReader("code/main.html");
+			FileReader fr = new FileReader(file);
 			while (true) {
 				int k = fr.read();
 				if (k < 0) break;

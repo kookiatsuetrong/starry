@@ -17,6 +17,8 @@ public class Start extends StarryApp {
 }
 ```
 
+![](photo/starry-first.png)
+
 Unix BASH commands
 
 ```bash
@@ -77,6 +79,9 @@ public class Start extends StarryApp {
 	""";
 }
 ```
+
+![](photo/starry-event.png)
+
 
 Toggle Button
 
@@ -292,27 +297,18 @@ Modal Dialog
 Refreshing Dynamically
 ```java
 import starry.StarryApp;
-import java.io.FileReader;
 
 public class Start extends StarryApp {
 	
 	public void main() {
-		String buffer = "";
-		try {		
-			FileReader fr = new FileReader("code/main.html");
-			while (true) {
-				int k = fr.read();
-				if (k < 0) break;
-				buffer += (char)k;
-			}
-		} catch (Exception e) { }
-		loadContent(buffer);
+		loadFile("code/main.html");
 	}
 	
 	public void setup() {
 		setAction("refresh", e -> main() );
 	}
 }
+
 ```
 
 
