@@ -14,9 +14,9 @@ public class Start extends StarryApp {
 	}
 	
 	void add() {
-		HTMLInputElement input = (HTMLInputElement)getElement("task");
-		Element report = getElement("report");
-		Element item = createElement("p");
+		var input  = (HTMLInputElement)getElement("task");
+		var report = getElement("report");
+		var item   = createElement("p");
 		try {
 			item.setTextContent(input.getValue());
 			report.appendChild(item);
