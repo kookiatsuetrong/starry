@@ -153,12 +153,14 @@ public class Start extends StarryApp {
 		<section id="report"></section>
 	</body>
 	<style>
-	body {
+	* {
+		outline: none;
 		font-family: sans-serif;
+	}
+	body {
 	 	padding: 1rem;
 	}
  	button {
-		font-family: sans-serif;
 		color: white;
 		background: dodgerblue;
 	 	padding: .5rem 1rem;
@@ -216,13 +218,12 @@ public class Start extends StarryApp {
 	<style>
 	* {
 		outline: none;
+		font-family: sans-serif;
 	}
 	body {
-		font-family: sans-serif;
 	 	padding: 1rem;
 	}
  	button {
-		font-family: sans-serif;
 		color: white;
 		background: dodgerblue;
 	 	padding: .5rem 1rem;
@@ -234,10 +235,9 @@ public class Start extends StarryApp {
 	 	background: steelblue;
 	}
 	input {
-		font-family: sans-serif;
 		border: none;
-		height: 2rem;
 		border-radius: .35rem;
+		height: 2rem;
 		padding: .25rem .5rem;
 		background: #eee;
 	}

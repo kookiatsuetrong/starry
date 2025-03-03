@@ -38,13 +38,12 @@ public class Start extends StarryApp {
 	<style>
 	* {
 		outline: none;
+		font-family: sans-serif;
 	}
 	body {
-		font-family: sans-serif;
 	 	padding: 1rem;
 	}
  	button {
-		font-family: sans-serif;
 		color: white;
 		background: dodgerblue;
 	 	padding: .5rem 1rem;
@@ -56,7 +55,6 @@ public class Start extends StarryApp {
 	 	background: steelblue;
 	}
 	input {
-		font-family: sans-serif;
 		border: none;
 		border-radius: .35rem;
 		height: 2rem;
