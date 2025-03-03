@@ -83,6 +83,19 @@ public abstract class StarryApp extends Application {
 	public void loadContent(String content, String type) {
 		page.getEngine().loadContent(content, type);
 	}
+	
+	// Forward to getElementById()
+	public Element getElement(String identifier) {
+		return page.getEngine()
+				.getDocument()
+				.getElementById(identifier);
+	}
+	
+	public Element createElement(String tag) {
+		return page.getEngine()
+				.getDocument()
+				.createElement(tag);
+	}
 
 	// Call application's setup() method
 	void initialize() {
