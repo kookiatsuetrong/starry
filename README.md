@@ -3,7 +3,7 @@
 The framework for writing modern Java desktop application.
 
 
-A simple app.
+Simple App
 
 ```java
 import starry.StarryApp;
@@ -48,7 +48,8 @@ java --class-path "code"       ^
 Start
 ```
 
-Simple app with event handling.
+Event Handling
+
 ```java
 import starry.StarryApp;
 import javafx.application.Platform;
@@ -93,10 +94,10 @@ public class Start extends StarryApp {
 	}
 	
 	public void setup() {
-		setAction("sample-button", e -> find(e) );
+		setAction("sample-button", e -> change(e) );
 	}
 	
-	void find(Event event) {
+	void change(Event event) {
 		Element element = (Element)event.getTarget();
 		try {
 			String current = element.getTextContent();
