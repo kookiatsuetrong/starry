@@ -2,21 +2,25 @@
 
 The framework for writing modern Java desktop application.
 
-Windows Setup
+Setting up on Windows
 ```
 curl https://codestar.work/starry.bat | cmd
 ```
 
-Linux Setup
+Setting up on Linux x64
 ```
 curl https://codestar.work/starry-linux-x64.sh  | sh
 ```
 
-macOS Setup
+Setting up on macOS x64
+```
+curl https://codestar.work/starry-darwin-x64.sh | sh
+```
+
+Setting up on macOS a64
 ```
 curl https://codestar.work/starry-darwin-a64.sh | sh
 ```
-
 
 Simple App
 
