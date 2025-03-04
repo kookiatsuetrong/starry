@@ -10,6 +10,8 @@ tar xf jdk-linux.tar.gz
 mv jdk-23.0.2 jdk
 rm jdk-linux.tar.gz
 
+jdk/bin/java --version
+
 curl --location --output javafx-linux.tar.gz \
 https://download.java.net/java/GA/javafx23.0.2\
 /512f2f157741485abda37a0a95f69984/3\
@@ -18,8 +20,6 @@ https://download.java.net/java/GA/javafx23.0.2\
 tar xf javafx-linux.tar.gz
 mv javafx-sdk-23.0.2 javafx
 rm javafx-linux.tar.gz
-
-jdk/bin/java --version
 
 mkdir runtime
 curl --location --output runtime/json.jar \
