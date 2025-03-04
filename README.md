@@ -310,6 +310,8 @@ public class Start extends StarryApp {
 }
 ```
 
+![](photo/starry-external.png)
+
 
 Common Methods
 ```java
