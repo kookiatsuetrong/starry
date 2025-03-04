@@ -10,11 +10,11 @@ public class Start extends StarryApp {
 		setAction("refresh", e -> main() );
 		
 		String arch = System.getProperty("os.arch");
-		System.out.println(arch); // amd64
+		System.out.println(arch);
 		
 		
 		String os = System.getProperty("os.name");
-		System.out.println(os);   // Windows 11
+		System.out.println(os);
 		
 		try {
 			getElement("report-arch")
