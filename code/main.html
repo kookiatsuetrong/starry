@@ -24,7 +24,8 @@
 			<p>This is the main page for application.</p>
 			
 			<section id="prompt-box">
-				<input id="prompt-input" autofocus />
+				<input id="prompt-input" autofocus 
+					placeholder="Prompt" />
 				<button id="prompt-button">Ask Privately</button>
 			</section>
 		</section>
@@ -81,7 +82,6 @@ body {
 	height: 100dvh;
 	color: #333;
 	background: #f0f4ff;
-	min-width: 400px;
 }
 header {
 	height: 2rem;
@@ -154,7 +154,13 @@ section h3 {
 .system-detail span {
 	color: #333;
 }
-#prompt-input {
+#prompt-box { 
+	position: absolute;
+	width: calc(100% - 4rem);
+	bottom: 2rem;
+	left: 2rem;
+}
+#prompt-box input {
 	background: #ddd;
 	border: .25rem solid #ddd;
 	border-radius: 2rem;
@@ -163,13 +169,13 @@ section h3 {
 	width: calc(100% - 11rem);
 	transition: background .15s linear;
 }
-#prompt-input:focus {
+#prompt-box input:focus {
 	background: white;
 }
-#prompt-button {
+#prompt-box button {
 	position: absolute;
 	border-radius: 2rem;
-	right: 1.3rem;
+	right: .3rem;
 	margin-top: .3rem;
 	padding: 1.1rem 1.2rem;
 }	

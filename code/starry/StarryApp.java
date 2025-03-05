@@ -45,6 +45,7 @@ public abstract class StarryApp extends Application {
 	}
 	
 	public Stage mainStage;
+	public Scene mainScene;
 	
 	@Override
 	public void start(Stage stage) {
@@ -60,17 +61,32 @@ public abstract class StarryApp extends Application {
 					}
 				});
 
-			VBox box = new VBox(page);
-			Scene scene = new Scene(box, 480, 360);
-			stage.setScene(scene);
+			mainScene = new Scene(page, 480, 360);
+			stage.setScene(mainScene);
+			mainStage.setMinWidth(480);
+			mainStage.setMinHeight(360);
 			
 			Class<?> instance = this.getClass();
 			Method main = instance.getMethod("main");		
 			if (valid(main)) {
 				main.invoke(this);
 			}
-		
+			// stage.sizeToScene();
 			stage.show();
+
+			/*
+			stage.widthProperty().addListener( 
+				(observe, current, value) -> {
+					double w = stage.getWidth();
+					double h = stage.getHeight();
+				});
+
+			stage.heightProperty().addListener(
+				(observe, current, value) -> {
+					double w = stage.getWidth();
+					double h = stage.getHeight();
+				});
+			*/
 		} catch (Exception e) { }
 	}
 	
