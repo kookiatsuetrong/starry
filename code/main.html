@@ -1,172 +1,178 @@
 <!DOCTYPE html>
 <html>
-	<head>
-		<title>Sample</title>
-	</head>
-	<body>
-		<header>
-			<a class="tab-button active"
-				id="main-button" 
-				onclick="activateTab('main')">Main</a>
-			<a class="tab-button"
-				id="settings-button"
-				onclick="activateTab('settings')">Settings</a>
-			<a class="tab-button"
-				id="about-button"
-				onclick="activateTab('about')">About</a>
+<head>
+	<title>Sample</title>
+</head>
+<body>
+	<header>
+		<a class="tab-button active"
+			id="main-button" 
+			onclick="activateTab('main')">Main</a>
+		<a class="tab-button"
+			id="settings-button"
+			onclick="activateTab('settings')">Settings</a>
+		<a class="tab-button"
+			id="about-button"
+			onclick="activateTab('about')">About</a>
 
-			<a class="tab-button" id="refresh">Refresh</a>
-		</header>
-		
-		<main>
-			<section class="page active" id="main-tab">
-				<h3>Main</h3>
-				<p>This is the main page for application.</p>
-				
+		<a class="tab-button" id="refresh">Refresh</a>
+	</header>
+	
+	<main>
+		<section class="page active" id="main-tab">
+			<h3>Main</h3>
+			<p>This is the main page for application.</p>
+			
+			<section id="prompt-box">
 				<input id="prompt-input" autofocus />
 				<button id="prompt-button">Ask Privately</button>
 			</section>
+		</section>
 
-			<section class="page hidden" id="settings-tab">
-				<h3>Settings</h3>
-				<p>This is the settings page.</p>
-				<br/>
-				<button>Love</button>
-				<button>Hate</button>
-			</section>
+		<section class="page hidden" id="settings-tab">
+			<h3>Settings</h3>
+			<p>This is the settings page.</p>
+			<br/>
+			<button>Love</button>
+			<button>Hate</button>
+		</section>
 
-			<section class="page hidden" id="about-tab">
-				<h3>About</h3>
-				<p class="system-detail">Architecture:
-					<span id="report-arch"></span>
-				</p>
-				<p class="system-detail">Operating System:
-					<span id="report-os"></span>
-				</p>
-			</section>
-		</main>
-	</body>
+		<section class="page hidden" id="about-tab">
+			<h3>About</h3>
+			<p class="system-detail">Architecture:
+				<span id="report-arch"></span>
+			</p>
+			<p class="system-detail">Operating System:
+				<span id="report-os"></span>
+			</p>
+		</section>
+	</main>
+</body>
 
-	<script>
-	activateTab("main")
+<script>
+activateTab("main")
+
+function activateTab(name) {
+	var buttons = ["main", "settings", "about"]
+	for (var i = 0; i < buttons.length; i++) {
+		document.getElementById(buttons[i] + "-tab")
+				.style.display = "none"
+		document.getElementById(buttons[i] + "-button")
+				.classList.remove("active")
+	}
+	document.getElementById(name + "-tab")
+			.style.display = "block"
+	document.getElementById(name + "-button")
+			.classList.add("active")
 	
-	function activateTab(name) {
-		var buttons = ["main", "settings", "about"]
-		for (var i = 0; i < buttons.length; i++) {
-			document.getElementById(buttons[i] + "-tab")
-					.style.display = "none"
-			document.getElementById(buttons[i] + "-button")
-					.classList.remove("active")
-		}
-		document.getElementById(name + "-tab")
-				.style.display = "block"
-		document.getElementById(name + "-button")
-				.classList.add("active")
-		
-	}
-	
-	</script>
-	
-	<style>
-	* {
-		outline: none;
-		font-family: sans-serif;
-		margin: 0;
-		padding: 0;
-		border: 0;
-	}
-	body {
-		height: 100dvh;
-		color: #333;
-		background: #f0f4ff;
-	}
-	header {
-		height: 2rem;
-		padding-top: .5rem;
-	}
-	main {
-		height: calc(100dvh - 5rem);
-		background: #f0f4ff;
-		padding: 1rem;
-	}
+}
 
-	button {
-		color: white;
-		background: dodgerblue;
-		padding: .5rem 1rem;
-		border: none;
-		border-radius: .35rem;
-		transition: background .25s linear;
-		font-size: 1rem;
-	}
-	button:hover {
-		background: steelblue;
-	}
-	input {
-		border: none;
-		border-radius: .35rem;
-		padding: .5rem .5rem;
-		background: #eee;
-		font-size: 1rem;
-	}
-	a {
-		color: #333;
-		text-decoration: none;
-		font-family: sans-serif;
-	}
-	a:hover {
-		cursor: pointer;
-		border-bottom: .25rem solid #ccddff;
-	}
-	p {
-		margin-bottom: 1rem;
-	}
-	h3 {
-		font-size: 2rem;
-	}
-	section h3 {
-		margin-bottom: 1rem;
-	}
-	.tab-button {
-		padding: 0 1rem .25rem 1rem;
-	}
+</script>
 	
-	.tab-button.active {
-		border-bottom: .25rem solid dodgerblue;
-	}
+<style>
+* {
+	outline: none;
+	font-family: sans-serif;
+	margin: 0;
+	padding: 0;
+	border: 0;
+}
+body {
+	height: 100dvh;
+	color: #333;
+	background: #f0f4ff;
+	min-width: 400px;
+}
+header {
+	height: 2rem;
+	padding-top: .5rem;
+}
+main {
+	height: calc(100dvh - 5rem);
+	background: #f0f4ff;
+	padding: 1rem;
+}
 
-	.page {
+button {
+	color: white;
+	background: dodgerblue;
+	padding: .5rem 1rem;
+	border: none;
+	border-radius: .35rem;
+	transition: background .25s linear;
+	font-size: 1rem;
+}
+button:hover {
+	background: steelblue;
+	cursor: pointer;
+}
+input {
+	border: none;
+	border-radius: .35rem;
+	padding: .5rem .5rem;
+	background: #eee;
+	font-size: 1rem;
+}
+a {
+	color: #333;
+	text-decoration: none;
+	font-family: sans-serif;
+}
+a:hover {
+	cursor: pointer;
+	border-bottom: .25rem solid #ccddff;
+}
+p {
+	margin-bottom: 1rem;
+}
+h3 {
+	font-size: 2rem;
+}
+section h3 {
+	margin-bottom: 1rem;
+}
+.tab-button {
+	padding: 0 1rem .25rem 1rem;
+}
 
-	}
-	.page.active {
-		display: block;
-	}
-	.page.hidden {
-		display: none;
-	}
-	.system-detail {
-		color: #bbb;
-	}
-	.system-detail span {
-		color: #333;
-	}
-	#prompt-input {
-		background: #ddd;
-		border: .25rem solid #ddd;
-		border-radius: 2rem;
-		padding: 1rem 9rem 1rem 1.5rem;
-		font-size: 1.25rem;
-		width: calc(100% - 11rem);
-	}
-	#prompt-input:focus {
-		background: white;
-	}
-	#prompt-button {
-		position: absolute;
-		border-radius: 2rem;
-		right: 1.3rem;
-		margin-top: .3rem;
-		padding: 1.1rem 1.2rem;
-	}
-	</style>
+.tab-button.active {
+	border-bottom: .25rem solid dodgerblue;
+}
+
+.page {
+
+}
+.page.active {
+	display: block;
+}
+.page.hidden {
+	display: none;
+}
+.system-detail {
+	color: #bbb;
+}
+.system-detail span {
+	color: #333;
+}
+#prompt-input {
+	background: #ddd;
+	border: .25rem solid #ddd;
+	border-radius: 2rem;
+	padding: 1rem 9rem 1rem 1.5rem;
+	font-size: 1.25rem;
+	width: calc(100% - 11rem);
+	transition: background .15s linear;
+}
+#prompt-input:focus {
+	background: white;
+}
+#prompt-button {
+	position: absolute;
+	border-radius: 2rem;
+	right: 1.3rem;
+	margin-top: .3rem;
+	padding: 1.1rem 1.2rem;
+}	
+</style>
 </html>
+
