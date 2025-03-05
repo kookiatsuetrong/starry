@@ -12,6 +12,11 @@ Setting up on Linux x64
 curl https://codestar.work/starry-linux-x64.sh  | sh
 ```
 
+Setting up on Linux a64
+```
+curl https://codestar.work/starry-linux-a64.sh  | sh
+```
+
 Setting up on macOS x64
 ```
 curl https://codestar.work/starry-darwin-x64.sh | sh
