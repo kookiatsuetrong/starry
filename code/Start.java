@@ -24,9 +24,3 @@ public class Start extends StarryApp {
 		} catch (Exception e) { }
 	}
 }
-
-
-/*
-
-
-*/

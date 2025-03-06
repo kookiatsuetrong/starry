@@ -43,35 +43,10 @@ public class Start extends StarryApp {
 
 ![](photo/starry-first.png)
 
-Unix BASH commands
-
-```bash
-javac --class-path "code"      \
---module-path "./javafx/lib"   \
---add-modules javafx.controls  \
---add-modules javafx.web       \
-code/Start.java
-
-java --class-path "code"       \
---module-path "./javafx/lib"   \
---add-modules javafx.controls  \
---add-modules javafx.web       \
-Start
 ```
-
-Windows commands
-```
-javac --class-path "code"      ^
---module-path "javafx\lib"     ^
---add-modules javafx.controls  ^
---add-modules javafx.web       ^
-code\Start.java
-
-java --class-path "code"       ^
---module-path "javafx\lib"     ^
---add-modules javafx.controls  ^
---add-modules javafx.web       ^
-Start
+Windows:  make-windows.bat
+Linux:    bash make-linux.sh
+macOS:    bash make-darwin.sh
 ```
 
 Event Handling
@@ -338,6 +313,7 @@ public class Start extends StarryApp {
 
 
 Common Framework Methods & Fields
+
 ```Java
 public void setAction(event, handler)
 public void load(String location)

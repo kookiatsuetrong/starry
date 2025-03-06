@@ -41,16 +41,5 @@ curl --location --output code\starry\StarryApp.java ^
 https://raw.githubusercontent.com^
 /kookiatsuetrong/starry/refs/heads/main/code/starry/StarryApp.java
 
-jdk\bin\javac --class-path "code" ^
---module-path "javafx\lib"        ^
---add-modules javafx.controls     ^
---add-modules javafx.web          ^
-code\Start.java
-
-jdk\bin\java --class-path "code"  ^
---module-path "javafx\lib"        ^
---add-modules javafx.controls     ^
---add-modules javafx.web          ^
-Start
-
-
+curl --output make-windows.bat https://codestar.work/make-windows.bat
+make-windows.bat
