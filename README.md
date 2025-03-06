@@ -52,6 +52,18 @@ macOS:    bash make-darwin.sh
 
 Event Handling
 
+There are two ways to handle event:
+- By Lambda Method 
+- By Static Method
+
+```java
+1. Lambda Method
+setAction("love-button", e -> showLove(e));
+
+2. Static Method
+setAction("love-button", Start::showLove);
+```
+
 ```java
 import starry.StarryApp;
 import javafx.application.Platform;
