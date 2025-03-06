@@ -318,7 +318,6 @@ Common Framework Methods & Fields
 public void setAction(event, handler)
 public void load(String location)
 public void loadContent(String content)
-public void loadContent(String content, String type)
 public void loadFile(String file)
 public Element getElement(String identifier)
 public Element createElement(String tag)

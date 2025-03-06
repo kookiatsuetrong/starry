@@ -52,6 +52,9 @@ public abstract class StarryApp extends Application {
 		StarryApp.instance = this;
 		mainStage = stage;
 		
+		String location = getClass().getResource("style.css").toString();
+		page.getEngine().setUserStyleSheetLocation(location);
+		
 		try {
 			
 			page.getEngine().getLoadWorker()
@@ -67,8 +70,8 @@ public abstract class StarryApp extends Application {
 			mainStage.setMinWidth(480);
 			mainStage.setMinHeight(360);
 			
-			Class<?> cl = this.getClass();
-			Method main = cl.getMethod("main");		
+			// Class<?> cl = this.getClass();
+			Method main = getClass().getMethod("main");
 			if (valid(main)) {
 				main.invoke(this);
 			}
@@ -90,7 +93,7 @@ public abstract class StarryApp extends Application {
 			*/
 		} catch (Exception e) { }
 		
-			stage.show();
+		stage.show();
 	}
 	
 	// Forward to engine
@@ -138,8 +141,8 @@ public abstract class StarryApp extends Application {
 	// Call application's setup() method
 	void initialize() {
 		try {
-			Class<?> cl = this.getClass();
-			Method setup = cl.getMethod("setup");
+			// Class<?> cl = this.getClass();
+			Method setup = getClass().getMethod("setup");
 			if (valid(setup)) {
 				setup.invoke(this);
 			}
