@@ -1,8 +1,7 @@
 import starry.StarryApp;
-import javafx.application.Platform;
-import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.events.Event;
+import org.w3c.dom.html.HTMLInputElement;
 
 public class Start extends StarryApp {
 	
@@ -11,19 +10,18 @@ public class Start extends StarryApp {
 	}
 	
 	public void setup() {
-		setAction("love-button", e -> add("Love") );
-		setAction("hate-button", e -> add("Hate") );
+		setAction("add-button", e -> add() );
 	}
 	
-	void add(String message) {
-		Document document = page.getEngine().getDocument();
-		Element report = document.getElementById("report");
-		
-		Element item = document.createElement("p");
+	void add() {
+		var input  = (HTMLInputElement)getElement("task");
+		var report = getElement("report");
+		var item   = createElement("p");
 		try {
-			item.setTextContent(message);
+			item.setTextContent(input.getValue());
 			report.appendChild(item);
 		} catch (Exception e) { }
+		input.setValue("");
 	}
 	
 	String content = 
@@ -33,9 +31,9 @@ public class Start extends StarryApp {
 		</head>
 		<body>
 			<main>
-				<button id="love-button">Love</button>
-				<button id="hate-button">Hate</button>
-				<section id="report"></section>
+            	<input id="task" placeholder="Task" />
+            	<button id="add-button">Add</button>
+            	<section id="report"></section>
 			</main>
 		</body>
 		<style>
