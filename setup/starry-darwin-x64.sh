@@ -36,6 +36,10 @@ curl --location --output code/main.html \
 https://raw.githubusercontent.com\
 /kookiatsuetrong/starry/refs/heads/main/code/main.html
 
+curl --location --output code/style.css \
+https://raw.githubusercontent.com\
+/kookiatsuetrong/starry/refs/heads/main/code/style.css
+
 mkdir code/starry
 
 curl --location --output code/starry/StarryApp.java \
