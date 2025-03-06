@@ -57,12 +57,14 @@ There are two ways to handle event:
 - By Static Method
 
 ```java
-1. Lambda Method
+// 1. Lambda Method
 setAction("love-button", e -> showLove(e));
 
-2. Static Method
+// 2. Static Method
 setAction("love-button", Start::showLove);
 ```
+
+Sample Code
 
 ```java
 import starry.StarryApp;
