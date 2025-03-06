@@ -73,9 +73,15 @@ public class Start extends StarryApp {
 	
 	String content = 
 	"""
-	<body>
-		<button id="sample-button">Exit</button>
-	</body>
+	<html>
+		<head>
+		</head>
+		<body>
+			<main>
+				<button id="sample-button">Exit</button>
+			</main>
+		</body>
+	</html>
 	""";
 }
 ```
@@ -159,34 +165,24 @@ public class Start extends StarryApp {
 	
 	String content = 
 	"""
-	<body>
-		<button id="love-button">Love</button>
-		<button id="hate-button">Hate</button>
-		<section id="report"></section>
-	</body>
-	<style>
-	* {
-		outline: none;
-		font-family: sans-serif;
-	}
-	body {
-	 	padding: 1rem;
-	}
- 	button {
-		color: white;
-		background: dodgerblue;
-	 	padding: .5rem 1rem;
-		border: none;
-		border-radius: .35rem;
-		transition: background .25s linear;
-	}
-	button:hover {
-	 	background: steelblue;
-	}
-	</style>
+	<html>
+		<head>
+		</head>
+		<body>
+			<main>
+				<button id="love-button">Love</button>
+				<button id="hate-button">Hate</button>
+				<section id="report"></section>
+			</main>
+		</body>
+		<style>
+			#report { margin-top: 1rem; }
+		</style>
+	</html>
 	""";
 }
 ```
+![](photo/starry-love-hate.png)
 
 Todo Application
 ```java
