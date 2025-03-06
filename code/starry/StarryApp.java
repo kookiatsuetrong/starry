@@ -31,7 +31,7 @@ public abstract class StarryApp extends Application {
 		return instance;
 	}
 
-	static StarryApp instance;
+	private static StarryApp instance;
 
 	public WebView page = new WebView();
 
@@ -49,9 +49,10 @@ public abstract class StarryApp extends Application {
 	
 	@Override
 	public void start(Stage stage) {
+		StarryApp.instance = this;
+		mainStage = stage;
+		
 		try {
-			StarryApp.instance = this;
-			mainStage = stage;
 			
 			page.getEngine().getLoadWorker()
 				.stateProperty()
@@ -66,15 +67,15 @@ public abstract class StarryApp extends Application {
 			mainStage.setMinWidth(480);
 			mainStage.setMinHeight(360);
 			
-			Class<?> instance = this.getClass();
-			Method main = instance.getMethod("main");		
+			Class<?> cl = this.getClass();
+			Method main = cl.getMethod("main");		
 			if (valid(main)) {
 				main.invoke(this);
 			}
-			// stage.sizeToScene();
-			stage.show();
-
+			
 			/*
+			stage.sizeToScene();
+			
 			stage.widthProperty().addListener( 
 				(observe, current, value) -> {
 					double w = stage.getWidth();
@@ -88,6 +89,8 @@ public abstract class StarryApp extends Application {
 				});
 			*/
 		} catch (Exception e) { }
+		
+			stage.show();
 	}
 	
 	// Forward to engine
@@ -135,14 +138,12 @@ public abstract class StarryApp extends Application {
 	// Call application's setup() method
 	void initialize() {
 		try {
-			Class<?> instance = this.getClass();
-			Method setup = instance.getMethod("setup");
+			Class<?> cl = this.getClass();
+			Method setup = cl.getMethod("setup");
 			if (valid(setup)) {
 				setup.invoke(this);
 			}
-		} catch (Exception e) { 
-			System.out.println(e);
-		}
+		} catch (Exception e) { }
 	}
 
 	// Helper method to prevent using !=
