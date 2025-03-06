@@ -43,6 +43,7 @@ public class Start extends StarryApp {
 
 ![](photo/starry-first.png)
 
+Command Line to build the project.
 ```
 Windows:  make-windows.bat
 Linux:    bash make-linux.sh
@@ -111,12 +112,19 @@ public class Start extends StarryApp {
 	
 	String content = 
 	"""
-	<body>
-		<button id="sample-button">Yes</button>
-	</body>
+	<html>
+		<head>
+		</head>
+		<body>
+			<main>
+				<button id="sample-button">Yes</button>
+			</main>
+		</body>
+	</html>
 	""";
 }
 ```
+![](photo/starry-toggle.png)
 
 Love Hate
 

@@ -1,4 +1,37 @@
 import starry.StarryApp;
+import javafx.application.Platform;
+import org.w3c.dom.events.Event;
+
+public class Start extends StarryApp {
+	
+	public void main() {
+		loadContent(content);
+	}
+	
+	public void setup() {
+		setAction("sample-button", e -> exit(e) );
+	}
+	
+	void exit(Event event) {
+		Platform.exit();
+	}
+	
+	String content = 
+	"""
+	<html>
+		<head>
+		</head>
+		<body>
+			<main>
+				<button id="sample-button">Exit</button>
+			</main>
+		</body>
+	</html>
+	""";
+}
+
+/*
+import starry.StarryApp;
 
 public class Start extends StarryApp {
 	
@@ -24,3 +57,4 @@ public class Start extends StarryApp {
 		} catch (Exception e) { }
 	}
 }
+*/
