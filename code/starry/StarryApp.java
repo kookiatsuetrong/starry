@@ -15,6 +15,7 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.concurrent.Worker.State;
 import javafx.event.EventType;
+import javafx.scene.image.Image;
 
 import netscape.javascript.JSObject;
 
@@ -51,8 +52,13 @@ public abstract class StarryApp extends Application {
 	public void start(Stage stage) {
 		StarryApp.instance = this;
 		mainStage = stage;
+
+		/*
+		var icon = getClass().getResourceAsStream("/icon-black.png");
+		mainStage.getIcons().add(new Image(icon));
+		*/
 		
-		String location = getClass().getResource("style.css").toString();
+		String location = getClass().getResource("/style.css").toString();
 		page.getEngine().setUserStyleSheetLocation(location);
 		
 		try {
