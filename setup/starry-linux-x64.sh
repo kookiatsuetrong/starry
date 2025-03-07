@@ -26,23 +26,20 @@ curl --location --output runtime/json.jar \
 https://repo1.maven.org/maven2/org/json/json/20250107/json-20250107.jar
 
 mkdir code
+
 curl --location --output code/Start.java \
-https://raw.githubusercontent.com\
-/kookiatsuetrong/starry/refs/heads/main/code/Start.java
+https://codestar.work/starry/Start.java
 
 curl --location --output code/main.html \
-https://raw.githubusercontent.com\
-/kookiatsuetrong/starry/refs/heads/main/code/main.html
+https://codestar.work/starry/main.html
 
 curl --location --output code/style.css \
-https://raw.githubusercontent.com\
-/kookiatsuetrong/starry/refs/heads/main/code/style.css
+https://codestar.work/starry/style.css
 
 mkdir code/starry
 
 curl --location --output code/starry/StarryApp.java \
-https://raw.githubusercontent.com\
-/kookiatsuetrong/starry/refs/heads/main/code/starry/StarryApp.java
+https://codestar.work/starry/StarryApp.java
 
 curl --output make-linux.sh https://codestar.work/make-linux.sh
 bash make-linux.sh
