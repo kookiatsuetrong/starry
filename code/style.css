@@ -63,16 +63,13 @@ select {
 	color: #333;
 	background-image:
 		linear-gradient(45deg, transparent 50%, dodgerblue 50%),
-		linear-gradient(135deg, dodgerblue 50%, transparent 50%),
-		linear-gradient(to right, #ccc, #ccc);
+		linear-gradient(135deg, dodgerblue 50%, transparent 50%);
 	background-position:
 		calc(100% - 1.30rem) calc(1rem),
-		calc(100% - 0.85rem) calc(1rem),
-		calc(100% - 2.5rem)  0.35rem;
+		calc(100% - 0.825rem) calc(1rem);
 	background-size:
 		.5rem .5rem,
-		.5rem .5rem,
-		.1rem 1.5em;
+		.5rem .5rem;
 	background-repeat: no-repeat;
 }
 select:hover {
@@ -81,8 +78,7 @@ select:hover {
 select:focus {
 	background-image:
 		linear-gradient(45deg, transparent 50%, #888 50%),
-		linear-gradient(135deg, #888 50%, transparent 50%),
-		linear-gradient(to right, #ccc, #ccc);
+		linear-gradient(135deg, #888 50%, transparent 50%);
 }
 input[type=checkbox] {
 	appearance: none;
