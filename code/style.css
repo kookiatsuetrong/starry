@@ -34,30 +34,36 @@ button:hover {
 	cursor: pointer;
 }
 input {
-	border: none;
 	border-radius: .35rem;
 	padding: .5rem .5rem;
 	background: #eee;
 	font-size: 1rem;
+	border: .1rem #eee solid;
+	min-width: 15rem;
 }
+input:focus {
+	background: white;
+	border: .1rem #bbb solid;
+}
+
 option {
 	padding: .2rem 2rem;
 	background: pink;
 }
 
 select {
-	border: .1rem solid #ddd;
+	border: .1rem solid #eee;
 	border-radius: .35rem;
 	padding: .5rem 1rem;
 	-webkit-appearance: none;
 	appearance: none;
 	transition: border .15s linear;
-	min-width: 20rem;
+	min-width: 16rem;
 	opacity: .95;
 	color: #333;
 	background-image:
-		linear-gradient(45deg, transparent 50%, #333 50%),
-		linear-gradient(135deg, #333 50%, transparent 50%),
+		linear-gradient(45deg, transparent 50%, dodgerblue 50%),
+		linear-gradient(135deg, dodgerblue 50%, transparent 50%),
 		linear-gradient(to right, #ccc, #ccc);
 	background-position:
 		calc(100% - 1.30rem) calc(1rem + .0rem),
@@ -84,29 +90,31 @@ select:focus {
 }
 input[type=checkbox] {
 	appearance: none;
-	background-color: #fff;
-	width: 1.25rem;
-	height: 1.25rem;
-	border: 0.15rem solid #666;
-	border-radius: 0.15em;
-	transform: translateY(0.2rem);
+	background: white;
+	min-width: 1rem;
+	width: 1.5rem;
+	height: 1.5rem;
+	border: 0.15rem solid #ddd;
+	border-radius: 0.15rem;
+	transform: translateY(0.4rem);
 }
 input[type=checkbox]::before {
 	content: "";
-	width: .8rem;
-	height: .8rem;
+	width: 1rem;
+	height: 1rem;
 	transform: scale(0);
+	transform-origin: bottom left;
 	transition: transform 120ms ease-in-out;
 	box-shadow: inset 1rem 1rem dodgerblue;
 	position: absolute;
 	left: .05rem;
 	top: .1rem;
-	transform-origin: bottom left;
-	clip-path: polygon(14% 44%, 0 65%, 50% 100%, 100% 16%, 80% 0%, 43% 62%);
+	clip-path: polygon(14% 44%, 0 65%, 50% 100%, 
+					100% 16%, 80% 0%, 43% 62%);
 }
 
 input[type=checkbox]:checked::before {
-	transform: scale(1);
+	transform: scale(1.1);
 }
 
 input[type=checkbox]:hover {
@@ -115,6 +123,34 @@ input[type=checkbox]:hover {
 
 input[type=checkbox]+label {
 	
+}
+
+input[type=radio] {
+	appearance: none;
+	background: white;
+	min-width: 1rem;
+	width: 1.5rem;
+	height: 1.5rem;
+	border: 0.15rem solid #ddd;
+	border-radius: 1rem;
+	transform: translateY(0.4rem);
+}
+input[type=radio]:checked {
+	
+}
+
+input[type=radio]::before {
+	content: "";
+	width: 1rem;
+	height: 1rem;
+	border-radius: .5rem;
+	position: absolute;
+	left: .15rem;
+	top: .15rem;
+}
+
+input[type=radio]:checked::before {
+	background: dodgerblue;
 }
 
 a {
@@ -135,6 +171,13 @@ h3 {
 section h3 {
 	margin-bottom: 1rem;
 }
+
+.duo {
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	column-gap: 2rem;
+}
+
 .tab-button {
 	padding: 0 1rem .25rem 1rem;
 }
