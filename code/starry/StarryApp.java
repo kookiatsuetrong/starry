@@ -53,10 +53,8 @@ public abstract class StarryApp extends Application {
 		StarryApp.instance = this;
 		mainStage = stage;
 
-		/*
 		var icon = getClass().getResourceAsStream("/icon-black.png");
-		mainStage.getIcons().add(new Image(icon));
-		*/
+		mainStage.getIcons().add(new Image(icon));		
 		
 		String location = getClass().getResource("/style.css").toString();
 		page.getEngine().setUserStyleSheetLocation(location);
