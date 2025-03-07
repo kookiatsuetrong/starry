@@ -66,17 +66,13 @@ select {
 		linear-gradient(135deg, dodgerblue 50%, transparent 50%),
 		linear-gradient(to right, #ccc, #ccc);
 	background-position:
-		calc(100% - 1.30rem) calc(1rem + .0rem),
-		calc(100% - 0.82rem) calc(1rem + .0rem),
-		calc(100% - 2.5rem)  0.5rem;
-	background-size:
-		.3rem .3rem,
-		.3rem .3rem,
-		.07rem 1.5em;
+		calc(100% - 1.30rem) calc(1rem),
+		calc(100% - 0.85rem) calc(1rem),
+		calc(100% - 2.5rem)  0.35rem;
 	background-size:
 		.5rem .5rem,
 		.5rem .5rem,
-		.07rem 1.5em;
+		.1rem 1.5em;
 	background-repeat: no-repeat;
 }
 select:hover {
@@ -145,8 +141,8 @@ input[type=radio]::before {
 	height: 1rem;
 	border-radius: .5rem;
 	position: absolute;
-	left: .15rem;
-	top: .15rem;
+	left: .1245rem;
+	top: .1245rem;
 }
 
 input[type=radio]:checked::before {
