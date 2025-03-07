@@ -1,0 +1,18 @@
+
+.context-menu {
+	-fx-opacity: .90;
+	-fx-min-width: 120;
+}
+
+.menu-item {
+	-fx-padding: 4 32 4 16;
+}
+
+.menu-item .label {
+	
+}
+
+.menu-item:focused {
+	-fx-background-color: dodgerblue;
+	-fx-border-radius: 5;
+}

@@ -70,6 +70,7 @@ public abstract class StarryApp extends Application {
 				});
 
 			mainScene = new Scene(page, 480, 360);
+			mainScene.getStylesheets().add("main.css");
 			stage.setScene(mainScene);
 			mainStage.setMinWidth(480);
 			mainStage.setMinHeight(360);

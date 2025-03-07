@@ -29,14 +29,34 @@
 				<button id="prompt-button">Ask Privately</button>
 			</section>
 		</section>
-
+		
 		<section class="page hidden" id="settings-tab">
 			<h3>Settings</h3>
-			<p>This is the settings page.</p>
+			<p>The quick brown fox jumps over a lazy dog.</p>
 			<br/>
 			<button id="love-button">Love</button>
 			<button id="hate-button">Hate</button>
+			<br/>
+			<br/>
+			<select>
+				<option>Atlanta</option>
+				<option>Boston</option>
+				<option>Chicago</option>
+				<option>New York</option>
+			</select>
+			<br/>
+			<br/>
+			<input type="checkbox" id="alpha">
+			<label for="alpha">Alpha</label>
+			<br/>
+			<input type="checkbox" id="beta">
+			<label for="beta">Beta</label>
+			<br/>
+			<input type="checkbox" id="gamma">
+			<label for="gamma">Gamma</label>
+			
 		</section>
+
 
 		<section class="page hidden" id="about-tab">
 			<h3>About</h3>
@@ -64,10 +84,38 @@ function activateTab(name) {
 	document.getElementById(name + "-tab")
 			.style.display = "block"
 	document.getElementById(name + "-button")
-			.classList.add("active")
+			.classList.add("active")	
+}
+</script>
+<style>
+
+label {
 	
 }
 
-</script>
+option {
+	
+}
+
+option:hover {
+	
+}
+
+select {
+
+}
+
+select::after {
+	
+}
+select:hover {
+
+}
+
+select:focus {
+
+}
+
+</style>
 </html>
 
