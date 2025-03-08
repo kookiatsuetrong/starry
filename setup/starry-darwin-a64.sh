@@ -26,21 +26,13 @@ mkdir runtime
 curl --location --output runtime/json.jar \
 https://repo1.maven.org/maven2/org/json/json/20250107/json-20250107.jar
 
+curl --location --output starry.tar.gz \
+https://codestar.work/starry.tar.gz
+
 mkdir code
-
-curl --location --output code/Start.java \
-https://codestar.work/starry/Start.java
-
-curl --location --output code/main.html \
-https://codestar.work/starry/main.html
-
-curl --location --output code/style.css \
-https://codestar.work/starry/style.css
-
-mkdir code/starry
-
-curl --location --output code/starry/StarryApp.java \
-https://codestar.work/starry/StarryApp.java
+cd code
+tar xf ../starry.tar.gz
+cd ..
 
 curl --output make-darwin.sh https://codestar.work/make-darwin.sh
 bash make-darwin.sh
