@@ -4,11 +4,8 @@ import org.w3c.dom.events.Event;
 public class Start extends StarryApp {
 	
 	public void main() {
+		setTitle("Application");
 		loadFile("code/main.html");
-	}
-	
-	static void showLove(Event e) {
-		System.out.println(e);
 	}
 	
 	public void setup() {
@@ -29,6 +26,10 @@ public class Start extends StarryApp {
 			getElement("report-os")
 				.setTextContent(os);
 		} catch (Exception e) { }
+	}
+	
+	static void showLove(Event e) {
+		System.out.println(e);
 	}
 }
 

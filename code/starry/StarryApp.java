@@ -28,12 +28,6 @@ import org.w3c.dom.html.HTMLInputElement;
 
 public abstract class StarryApp extends Application {
 
-	public static StarryApp getInstance() {
-		return instance;
-	}
-
-	private static StarryApp instance;
-
 	public WebView page = new WebView();
 
 	public void setAction(String selector, EventListener listener) {
@@ -75,7 +69,6 @@ public abstract class StarryApp extends Application {
 			mainStage.setMinWidth(480);
 			mainStage.setMinHeight(360);
 			
-			// Class<?> cl = this.getClass();
 			Method main = getClass().getMethod("main");
 			if (valid(main)) {
 				main.invoke(this);
@@ -99,6 +92,10 @@ public abstract class StarryApp extends Application {
 		} catch (Exception e) { }
 		
 		stage.show();
+	}
+	
+	public void setTitle(String name) {
+		mainStage.setTitle(name);
 	}
 	
 	// Forward to engine
@@ -137,6 +134,7 @@ public abstract class StarryApp extends Application {
 				.getElementById(identifier);
 	}
 	
+	// Forward to createElement()
 	public Element createElement(String tag) {
 		return page.getEngine()
 				.getDocument()
@@ -146,7 +144,6 @@ public abstract class StarryApp extends Application {
 	// Call application's setup() method
 	void initialize() {
 		try {
-			// Class<?> cl = this.getClass();
 			Method setup = getClass().getMethod("setup");
 			if (valid(setup)) {
 				setup.invoke(this);
@@ -158,4 +155,12 @@ public abstract class StarryApp extends Application {
 	boolean valid(Object o) {
 		return o != null;
 	}
+	
+	
+	/* This is not necessary anymore */
+	public static StarryApp getInstance() {
+		return instance;
+	}
+
+	private static StarryApp instance;
 }

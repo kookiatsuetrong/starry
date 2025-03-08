@@ -1,7 +1,7 @@
 mkdir platform
 cd platform
 
-rem OpenJDK for Windows x64
+
 curl --location --output jdk.zip ^
 https://download.java.net/java/GA^
 /jdk23.0.2/6da2a6609d6e406f85c491fcb119101b/7/GPL^
@@ -11,7 +11,7 @@ tar xf jdk.zip
 move jdk-23.0.2 jdk
 jdk\bin\java --version
 
-rem OpenJFX for Windows x64
+
 curl --location --output javafx.zip ^
 https://download.java.net/java/GA^
 /javafx23.0.2/512f2f157741485abda37a0a95f69984/3^
@@ -19,6 +19,7 @@ https://download.java.net/java/GA^
 
 tar xf javafx.zip
 move javafx-sdk-23.0.2 javafx
+
 
 mkdir runtime
 
