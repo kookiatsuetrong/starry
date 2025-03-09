@@ -50,9 +50,6 @@ public abstract class StarryApp extends Application {
 		var icon = getClass().getResourceAsStream("/icon-black.png");
 		mainStage.getIcons().add(new Image(icon));		
 		
-		String location = getClass().getResource("/style.css").toString();
-		page.getEngine().setUserStyleSheetLocation(location);
-		
 		try {
 			
 			page.getEngine().getLoadWorker()
@@ -64,10 +61,15 @@ public abstract class StarryApp extends Application {
 				});
 
 			mainScene = new Scene(page, 480, 360);
-			mainScene.getStylesheets().add("main.css");
+			mainScene.getStylesheets().add("app.css");
 			stage.setScene(mainScene);
 			mainStage.setMinWidth(480);
 			mainStage.setMinHeight(360);
+		
+			String location = getClass()
+						.getResource("/style.css")
+						.toString();
+			page.getEngine().setUserStyleSheetLocation(location);
 			
 			Method main = getClass().getMethod("main");
 			if (valid(main)) {
