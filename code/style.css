@@ -69,8 +69,8 @@ select {
 		linear-gradient(45deg, transparent 50%, dodgerblue 50%),
 		linear-gradient(135deg, dodgerblue 50%, transparent 50%);
 	background-position:
-		calc(100% - 1.30rem) calc(1rem),
-		calc(100% - 0.83rem) calc(1rem);
+		calc(100% - 1.30rem) calc(.8rem),
+		calc(100% - 0.83rem) calc(.8rem);
 	background-size:
 		.5rem .5rem,
 		.5rem .5rem;
@@ -79,10 +79,15 @@ select {
 select:hover {
 	border: .1rem solid #aaa;
 }
-select:focus {
+select:active {
 	background-image:
 		linear-gradient(45deg, transparent 50%, #888 50%),
 		linear-gradient(135deg, #888 50%, transparent 50%);
+	background-position:
+		calc(100% - 1.30rem) calc(.9rem),
+		calc(100% - 0.83rem) calc(.9rem);
+}
+select:focus {
 }
 input[type=checkbox] {
 	appearance: none;
