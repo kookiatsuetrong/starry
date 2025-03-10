@@ -5,7 +5,7 @@ public class Start extends StarryApp {
 	
 	public void main() {
 		setTitle("Application");
-		loadFile("code/main.html");
+		loadFile("main.html");
 	}
 	
 	public void setup() {

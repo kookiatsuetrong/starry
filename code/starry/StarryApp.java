@@ -1,6 +1,7 @@
 package starry;
 
 import java.io.FileReader;
+import java.io.InputStream;
 import java.lang.reflect.Method;
 
 import javafx.application.Application;
@@ -117,11 +118,11 @@ public abstract class StarryApp extends Application {
 	
 	// Load HTML data from file
 	public void loadFile(String file) {
+		InputStream input = getClass().getResourceAsStream(file);
 		String buffer = "";
-		try {		
-			FileReader fr = new FileReader(file);
+		try {
 			while (true) {
-				int k = fr.read();
+				int k = input.read();
 				if (k < 0) break;
 				buffer += (char)k;
 			}
