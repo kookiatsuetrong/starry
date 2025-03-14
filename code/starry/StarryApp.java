@@ -1,7 +1,7 @@
 package starry;
 
-import java.io.FileReader;
 import java.io.InputStream;
+import java.io.FileReader;
 import java.lang.reflect.Method;
 
 import javafx.application.Application;
@@ -47,12 +47,10 @@ public abstract class StarryApp extends Application {
 	public void start(Stage stage) {
 		StarryApp.instance = this;
 		mainStage = stage;
-
 		var icon = getClass().getResourceAsStream("/icon-black.png");
-		mainStage.getIcons().add(new Image(icon));		
+		mainStage.getIcons().add(new Image(icon));
 		
 		try {
-			
 			page.getEngine().getLoadWorker()
 				.stateProperty()
 				.addListener((value, last, current) -> {
@@ -67,10 +65,8 @@ public abstract class StarryApp extends Application {
 			mainStage.setMinWidth(480);
 			mainStage.setMinHeight(360);
 		
-			String location = getClass()
-						.getResource("/style.css")
-						.toString();
-			page.getEngine().setUserStyleSheetLocation(location);
+			var location = getClass().getResource("/main.css");
+			page.getEngine().setUserStyleSheetLocation(location.toString());
 			
 			Method main = getClass().getMethod("main");
 			if (valid(main)) {
@@ -92,7 +88,9 @@ public abstract class StarryApp extends Application {
 					double h = stage.getHeight();
 				});
 			*/
-		} catch (Exception e) { }
+		} catch (Exception e) { 
+			System.out.println(e);
+		}
 		
 		stage.show();
 	}
@@ -119,6 +117,7 @@ public abstract class StarryApp extends Application {
 	// Load HTML data from file
 	public void loadFile(String file) {
 		InputStream input = getClass().getResourceAsStream(file);
+        
 		String buffer = "";
 		try {
 			while (true) {
@@ -142,6 +141,23 @@ public abstract class StarryApp extends Application {
 		return page.getEngine()
 				.getDocument()
 				.createElement(tag);
+	}
+	
+	// Forward to executeScript()
+	public void executeScript(String script) {
+		page.getEngine().executeScript(script);
+	}
+	
+	// Forward to setContextText()
+	public void setText(String selector, String text) {
+		Platform.runLater( () -> {
+			var element = getElement(selector);
+			if (element == null) return;
+			
+			try {
+				element.setTextContent(text);
+			} catch (Exception e) { }
+		});
 	}
 
 	// Call application's setup() method
