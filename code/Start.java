@@ -10,26 +10,21 @@ public class Start extends StarryApp {
 	
 	public void setup() {
 		setAction("refresh", e -> main() );
-		
 		setAction("love-button", Start::showLove);
 		
 		String arch = System.getProperty("os.arch");
 		System.out.println(arch);
 		
-		
 		String os = System.getProperty("os.name");
 		System.out.println(os);
 		
-		try {
-			getElement("report-arch")
-				.setTextContent(arch);
-			getElement("report-os")
-				.setTextContent(os);
-		} catch (Exception e) { }
+		setText("report-arch", arch);
+		setText("report-os", os);
 	}
 	
 	static void showLove(Event e) {
 		System.out.println(e);
 	}
+	
 }
 

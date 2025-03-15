@@ -32,7 +32,55 @@ public abstract class StarryApp extends Application {
 	
 	public Stage mainStage;
 	public Scene mainScene;
+	
+	@Override
+	public void start(Stage stage) {
+		StarryApp.instance = this;
+		mainStage = stage;
+		
+		mainScene = new Scene(page, 480, 360);
+		mainScene.getStylesheets().add("app.css");
+		stage.setScene(mainScene);
+		mainStage.setMinWidth(480);
+		mainStage.setMinHeight(360);
 
+		var mainStyle = getClass().getResource("main.css");
+		page.getEngine().setUserStyleSheetLocation(mainStyle.toString());
+			
+		page.getEngine()
+			.getLoadWorker()
+			.stateProperty()
+			.addListener((value, last, current) -> {
+				if (current == State.SUCCEEDED) {
+					initialize();
+				}
+			});
+		
+		try {
+			Method main = getClass().getMethod("main");
+			if (valid(main)) {
+				main.invoke(this);
+			}
+		} catch (Exception e) { }
+		
+		var icon = getClass().getResourceAsStream("icon-black.png");
+		mainStage.getIcons().add(new Image(icon));
+		mainStage.show();
+	}
+	
+	// Call application's setup() method
+	void initialize() {
+		try {
+			Method setup = getClass().getMethod("setup");
+			if (valid(setup)) {
+				setup.invoke(this);
+			}
+		} catch (Exception e) { }
+	}
+	
+	/**
+	 * A helper method to add the "click" event handler
+	 */
 	public void setAction(String selector, EventListener listener) {
 		Document document = page.getEngine().getDocument();
 		if (document == null) return;
@@ -44,60 +92,43 @@ public abstract class StarryApp extends Application {
 		target.addEventListener("click", listener, false);
 	}
 	
-	@Override
-	public void start(Stage stage) {
-		StarryApp.instance = this;
-		mainStage = stage;
-		var icon = getClass().getResourceAsStream("/icon-black.png");
-		mainStage.getIcons().add(new Image(icon));
-		
-		try {
-			page.getEngine().getLoadWorker()
-				.stateProperty()
-				.addListener((value, last, current) -> {
-					if (current == State.SUCCEEDED) {
-						initialize();
-					}
-				});
-
-			mainScene = new Scene(page, 480, 360);
-			mainScene.getStylesheets().add("app.css");
-			stage.setScene(mainScene);
-			mainStage.setMinWidth(480);
-			mainStage.setMinHeight(360);
-
-			var location = getClass().getResource("/main.css");
-			page.getEngine().setUserStyleSheetLocation(location.toString());
-			
-			Method main = getClass().getMethod("main");
-			if (valid(main)) {
-				main.invoke(this);
-			}
-		} catch (Exception e) { }
-		
-		stage.show();
-	}
-	
+	/**
+	 *  Sets the application's name
+	 * 
+	 *  Forwards directory to mainStage.setTitle()
+	 */
 	public void setTitle(String name) {
 		mainStage.setTitle(name);
 	}
 	
-	// Forward to engine
+	/**
+	 * Forwards to page.getEngine().load()
+	 * 
+	 */
 	public void load(String location) {
 		page.getEngine().load(location);
 	}
 	
-	// Forward to engine
+	/**
+	 * Forwards to page.getEngine().loadContent()
+	 * 
+	 */
 	public void loadContent(String content) {
 		page.getEngine().loadContent(content);
 	}
 	
-	// Forward to engine
+	/**
+	 * Forwards to page.getEngine().loadContent()
+	 * 
+	 */
 	public void loadContent(String content, String type) {
 		page.getEngine().loadContent(content, type);
 	}
 	
-	// Load HTML data from file
+	/**
+	 * Reads file content from resource, and display as the main view.
+	 * 
+	 */
 	public void loadFile(String file) {
 		InputStream input = getClass().getResourceAsStream(file);
         
@@ -112,26 +143,39 @@ public abstract class StarryApp extends Application {
 		loadContent(buffer);
 	}
 	
-	// Forward to getElementById()
+	/**
+	 * Forwards to getElementById()
+	 * @param identifier
+	 * @return 
+	 */
 	public Element getElement(String identifier) {
 		return page.getEngine()
 				.getDocument()
 				.getElementById(identifier);
 	}
 	
-	// Forward to createElement()
+	/**
+	 * Forwards to document.createElement()
+	 * 
+	 */
 	public Element createElement(String tag) {
 		return page.getEngine()
 				.getDocument()
 				.createElement(tag);
 	}
 	
-	// Forward to executeScript()
+	/**
+	 * Forwards to executeScript()
+	 * 
+	 */
 	public void executeScript(String script) {
 		page.getEngine().executeScript(script);
 	}
 	
-	// Forward to setContextText()
+	/**
+	 * Forwards to setTextContent()
+	 * 
+	 */
 	public void setText(String selector, String text) {
 		Platform.runLater( () -> {
 			var element = getElement(selector);
@@ -143,17 +187,11 @@ public abstract class StarryApp extends Application {
 		});
 	}
 
-	// Call application's setup() method
-	void initialize() {
-		try {
-			Method setup = getClass().getMethod("setup");
-			if (valid(setup)) {
-				setup.invoke(this);
-			}
-		} catch (Exception e) { }
-	}
-
-	// Helper method to prevent using !=
+	/**
+	 * Helper method to prevent using !=
+	 * @param o
+	 * @return 
+	 */
 	boolean valid(Object o) {
 		return o != null;
 	}
