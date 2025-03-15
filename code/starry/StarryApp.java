@@ -1,7 +1,6 @@
 package starry;
 
 import java.io.InputStream;
-import java.io.FileReader;
 import java.lang.reflect.Method;
 
 import javafx.application.Application;
@@ -18,30 +17,32 @@ import javafx.concurrent.Worker.State;
 import javafx.event.EventType;
 import javafx.scene.image.Image;
 
-import netscape.javascript.JSObject;
-
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.events.Event;
-import org.w3c.dom.events.EventListener;
 import org.w3c.dom.events.EventTarget;
+import org.w3c.dom.events.EventListener;
 import org.w3c.dom.html.HTMLInputElement;
+
+import netscape.javascript.JSObject;
 
 public abstract class StarryApp extends Application {
 
 	public WebView page = new WebView();
+	
+	public Stage mainStage;
+	public Scene mainScene;
 
 	public void setAction(String selector, EventListener listener) {
 		Document document = page.getEngine().getDocument();
 		if (document == null) return;
+		
 		Element element = document.getElementById(selector);
 		if (element == null) return;
+		
 		EventTarget target = (EventTarget)element;
 		target.addEventListener("click", listener, false);
 	}
-	
-	public Stage mainStage;
-	public Scene mainScene;
 	
 	@Override
 	public void start(Stage stage) {
@@ -64,7 +65,7 @@ public abstract class StarryApp extends Application {
 			stage.setScene(mainScene);
 			mainStage.setMinWidth(480);
 			mainStage.setMinHeight(360);
-		
+
 			var location = getClass().getResource("/main.css");
 			page.getEngine().setUserStyleSheetLocation(location.toString());
 			
@@ -72,25 +73,7 @@ public abstract class StarryApp extends Application {
 			if (valid(main)) {
 				main.invoke(this);
 			}
-			
-			/*
-			stage.sizeToScene();
-			
-			stage.widthProperty().addListener( 
-				(observe, current, value) -> {
-					double w = stage.getWidth();
-					double h = stage.getHeight();
-				});
-
-			stage.heightProperty().addListener(
-				(observe, current, value) -> {
-					double w = stage.getWidth();
-					double h = stage.getHeight();
-				});
-			*/
-		} catch (Exception e) { 
-			System.out.println(e);
-		}
+		} catch (Exception e) { }
 		
 		stage.show();
 	}

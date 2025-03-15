@@ -1,5 +1,3 @@
-
-
 Switching Page
 ```java
 import starry.StarryApp;
