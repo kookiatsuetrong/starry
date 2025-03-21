@@ -2,24 +2,24 @@ mkdir platform
 cd platform
 
 curl --location --output jdk-darwin.tar.gz \
-https://download.java.net/java/GA/jdk23.0.2\
-/6da2a6609d6e406f85c491fcb119101b/7/GPL\
-/openjdk-23.0.2_macos-aarch64_bin.tar.gz
+https://download.java.net/java/GA/jdk24\
+/1f9ff9062db4449d8ca828c504ffae90/36/GPL\
+/openjdk-24_macos-aarch64_bin.tar.gz
 
 tar xf jdk-darwin.tar.gz
-mv jdk-23.0.2.jdk/Contents/Home jdk
+mv jdk-24.jdk/Contents/Home jdk
 rm jdk-darwin.tar.gz
-rm -r jdk-23.0.2.jdk
+rm -r jdk-24.jdk
 
 jdk/bin/java --version
 
 curl --location --output javafx-darwin.tar.gz \
-https://download.java.net/java/GA/javafx23.0.2\
-/512f2f157741485abda37a0a95f69984/3\
-/openjfx-23.0.2_macos-aarch64_bin-sdk.tar.gz
+https://download.java.net/java/GA/javafx24\
+/bde9f846c551418e80e98679ef280c36/29\
+/openjfx-24_macos-aarch64_bin-sdk.tar.gz
 
 tar xf javafx-darwin.tar.gz
-mv javafx-sdk-23.0.2 javafx
+mv javafx-sdk-24 javafx
 rm javafx-darwin.tar.gz
 
 mkdir runtime
