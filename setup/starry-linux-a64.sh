@@ -4,22 +4,24 @@ mkdir platform
 cd platform
 
 curl --location --output jdk-linux.tar.gz \
-https://corretto.aws/downloads/latest\
-/amazon-corretto-23-aarch64-linux-jdk.tar.gz
+https://download.java.net/java/GA/jdk24\
+/1f9ff9062db4449d8ca828c504ffae90/36/GPL\
+/openjdk-24_linux-aarch64_bin.tar.gz
 
 tar xf jdk-linux.tar.gz
-mv amazon-corretto-23.0.2.7.1-linux-aarch64 jdk
+mv jdk-24 jdk
 rm jdk-linux.tar.gz
 
 jdk/bin/java --version
 
-curl --location --output javafx-linux.zip \
-https://download2.gluonhq.com/openjfx/23.0.2\
-/openjfx-23.0.2_linux-aarch64_bin-sdk.zip
 
-unzip javafx-linux.zip
-mv javafx-sdk-23.0.2 javafx
-rm javafx-linux.zip
+curl --location --output javafx.zip \
+https://download2.gluonhq.com/openjfx/24\
+/openjfx-24_linux-aarch64_bin-sdk.zip
+
+unzip javafx.zip
+mv javafx-sdk-24 javafx
+rm javafx.zip
 
 mkdir runtime
 curl --location --output runtime/json.jar \
@@ -35,3 +37,4 @@ cd ..
 
 curl --output make-linux.sh https://codestar.work/make-linux.sh
 bash make-linux.sh
+
