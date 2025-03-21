@@ -2,7 +2,7 @@ import starry.StarryApp;
 import org.w3c.dom.events.Event;
 
 public class Start extends StarryApp {
-	
+
 	public void main() {
 		setTitle("Application");
 		loadFile("main.html");

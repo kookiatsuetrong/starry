@@ -38,11 +38,17 @@ public abstract class StarryApp extends Application {
 		StarryApp.instance = this;
 		mainStage = stage;
 		
+		var icon = getClass().getResourceAsStream("icon-black.png");
+		mainStage.getIcons().add(new Image(icon));
+		
 		mainScene = new Scene(page, 480, 360);
 		mainScene.getStylesheets().add("app.css");
 		stage.setScene(mainScene);
+		/*
 		mainStage.setMinWidth(480);
 		mainStage.setMinHeight(360);
+		*/
+		mainStage.show();
 
 		var mainStyle = getClass().getResource("main.css");
 		page.getEngine().setUserStyleSheetLocation(mainStyle.toString());
@@ -63,9 +69,6 @@ public abstract class StarryApp extends Application {
 			}
 		} catch (Exception e) { }
 		
-		var icon = getClass().getResourceAsStream("icon-black.png");
-		mainStage.getIcons().add(new Image(icon));
-		mainStage.show();
 	}
 	
 	// Call application's setup() method
