@@ -85,6 +85,20 @@
 </body>
 
 <script>
+
+window.addEventListener("touchstart", touching)
+window.addEventListener("mousedown", prevent)
+
+function touching(event) {
+	event.preventDefault()
+	return false
+}
+
+function prevent(event) {
+	event.preventDefault()
+	return false
+}
+
 activateTab("main")
 
 function activateTab(name) {
