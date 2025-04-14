@@ -1,4 +1,12 @@
-
+.root {
+	-fx-border-width: 4px;
+	-fx-border-style: solid;
+	-fx-border-color: hotpink;
+	-fx-border-radius: 5px;
+}
+.title-bar {
+	-fx-background-color: hotpink;
+}
 .context-menu {
 	-fx-opacity: .90;
 	-fx-min-width: 120;

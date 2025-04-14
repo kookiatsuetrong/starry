@@ -15,7 +15,13 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.concurrent.Worker.State;
 import javafx.event.EventType;
+import javafx.scene.Group;
 import javafx.scene.image.Image;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Circle;
+import javafx.stage.StageStyle;
+
+import javax.swing.JFrame;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -23,8 +29,6 @@ import org.w3c.dom.events.Event;
 import org.w3c.dom.events.EventTarget;
 import org.w3c.dom.events.EventListener;
 import org.w3c.dom.html.HTMLInputElement;
-
-import netscape.javascript.JSObject;
 
 public abstract class StarryApp extends Application {
 
@@ -37,21 +41,25 @@ public abstract class StarryApp extends Application {
 	public void start(Stage stage) {
 		StarryApp.instance = this;
 		mainStage = stage;
+		mainStage.initStyle(StageStyle.UNDECORATED);
+		
+		// page.setStyle("-fx-background-color: hotpink;");
 		
 		var icon = getClass().getResourceAsStream("icon-black.png");
 		mainStage.getIcons().add(new Image(icon));
 		
-		mainScene = new Scene(page, 480, 360);
+		mainScene = new Scene(page, 360, 480);
 		mainScene.getStylesheets().add("app.css");
 		stage.setScene(mainScene);
-		/*
-		mainStage.setMinWidth(480);
-		mainStage.setMinHeight(360);
-		*/
+		
+		// mainStage.setMinWidth(480);
+		// mainStage.setMinHeight(360);
+		
 		mainStage.show();
 
 		var mainStyle = getClass().getResource("main.css");
-		page.getEngine().setUserStyleSheetLocation(mainStyle.toString());
+		page.getEngine().setUserStyleSheetLocation
+							(mainStyle.toString());
 			
 		page.getEngine()
 			.getLoadWorker()
