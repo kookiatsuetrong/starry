@@ -1,6 +1,8 @@
+import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Point;
+import java.awt.Rectangle;
 import java.awt.RenderingHints;
 import java.awt.Toolkit;
 import java.awt.event.MouseAdapter;
@@ -16,6 +18,7 @@ import javafx.scene.web.WebView;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import javax.swing.WindowConstants;
 
@@ -35,6 +38,7 @@ class Starry {
 	public static int WIDTH  = 480;
 	public static int HEIGHT = 360;
 	public static JFrame frame;
+	public static Outer outer;
 	
 	Starry(String file) {
 		this();
@@ -48,7 +52,9 @@ class Starry {
 		frame.setBackground(new java.awt.Color(0,0,0,0));
 		frame.setShape(new RoundRectangle2D
 				.Double(0, 0, WIDTH, HEIGHT, 25, 25));
-		frame.setContentPane(new Outer());
+		outer = new Outer();
+		outer.setPreferredSize(new Dimension(WIDTH, HEIGHT));
+		frame.setContentPane(outer);
 		
 		var toolkit = Toolkit.getDefaultToolkit();
 		var size = toolkit.getScreenSize();
@@ -58,16 +64,16 @@ class Starry {
 		frame.setSize(WIDTH, HEIGHT);
 		
 		frame.getContentPane().setLayout(null);
-		RoundRectangle rr = new RoundRectangle();
-		rr.setBounds(10, 10, WIDTH - 20, HEIGHT - 20);
-		rr.setLayout(null);
 		
+		Wrapper wrapper = new Wrapper();
+		wrapper.setBounds(10, 10, WIDTH - 20, HEIGHT - 20);
+		wrapper.setLayout(null);
 		JFXPanel panel = new JFXPanel();
 		panel.setBounds(6,6, WIDTH - 32, HEIGHT - 32);
-		rr.add(panel);
+		wrapper.add(panel);
+		frame.getContentPane().add(wrapper);
 		
-		frame.getContentPane().add(rr);
-		
+		frame.pack();
 		frame.setVisible(true);
 		
 		Platform.runLater(() -> createApp(panel));
@@ -135,7 +141,7 @@ class Starry {
 	
 }
 
-class RoundRectangle extends JPanel {
+class Wrapper extends JPanel {
 	
 	@Override
 	protected void paintComponent(Graphics g) {
@@ -145,19 +151,23 @@ class RoundRectangle extends JPanel {
 			RenderingHints.KEY_ANTIALIASING,
 			RenderingHints.VALUE_ANTIALIAS_ON);
 		g2d.setColor(new java.awt.Color(0xF0, 0xF4, 0xFF) );
-		g2d.fillRoundRect(1, 1, Starry.WIDTH-22, Starry.HEIGHT-22, 14, 14);
+		// g2d.setColor(java.awt.Color.GRAY);
+		g2d.fillRoundRect(1, 1, 
+				Starry.WIDTH - 22, Starry.HEIGHT - 22, 
+				14, 14);
 	}
 }
 
 class Outer extends JPanel {
 	Outer() {
 		super();
-		addMouseListener(new Sample());
-		addMouseMotionListener(new SampleMotion());
+		addMouseListener(new MouseClick());
+		addMouseMotionListener(new MouseMotion());
 	}
 	
 	java.awt.Color moving  = new java.awt.Color(0,0,0,220);
 	java.awt.Color display = new java.awt.Color(0xF0, 0xF4, 0xFF, 220);
+	
 	@Override
 	protected void paintComponent(Graphics g) {
 		Graphics2D g2d = (Graphics2D)g;
@@ -165,17 +175,28 @@ class Outer extends JPanel {
 		g2d.setRenderingHint(
 			RenderingHints.KEY_ANTIALIASING,
 			RenderingHints.VALUE_ANTIALIAS_ON);
-		g2d.setColor( SampleMotion.start == null ? display : moving );
-		g2d.fillRoundRect(1, 1, Starry.WIDTH-2, Starry.HEIGHT-2, 25, 25);
+		g2d.setColor( MouseMotion.start == null ? display : moving );
+		g2d.fillRoundRect(1, 1, 
+				Starry.WIDTH - 2, Starry.HEIGHT - 2, 
+				25, 25);
+	}
+	
+	@Override
+	public Dimension getPreferredSize() {
+		if (isPreferredSizeSet()) {
+			return super.getPreferredSize();            
+		}
+		return new Dimension(Starry.WIDTH, Starry.HEIGHT);
 	}
 }
 
-class SampleMotion extends MouseMotionAdapter {
+class MouseMotion extends MouseMotionAdapter {
 	
 	public static Point start;
 	
 	@Override
 	public void mouseDragged(java.awt.event.MouseEvent e) {
+		if (start == null) return;
 		int x = e.getXOnScreen();
 		int y = e.getYOnScreen();
 		Starry.frame.setLocation(x - start.x, y - start.y);
@@ -183,7 +204,7 @@ class SampleMotion extends MouseMotionAdapter {
 
 }
 
-class Sample extends MouseAdapter {
+class MouseClick extends MouseAdapter {
 	
 	@Override
 	public void mousePressed(java.awt.event.MouseEvent e) {
@@ -194,12 +215,23 @@ class Sample extends MouseAdapter {
 		int dx = x - framePoint.x;
 		int dy = y - framePoint.y;
 		
-		SampleMotion.start = new Point(dx, dy);
+		MouseMotion.start = new Point(dx, dy);
 	}
 	
 	@Override
 	public void mouseReleased(java.awt.event.MouseEvent e) {
-		SampleMotion.start = null;
+		MouseMotion.start = null;
+		
+		System.out.println(e);
+		SwingUtilities.invokeLater( () -> {
+			Dimension s = Starry.frame.getSize();
+			Starry.outer.setPreferredSize
+						(new Dimension(s.width + 10, s.height));
+			Starry.frame.setPreferredSize
+						(new Dimension(s.width + 10, s.height));
+			Starry.frame.invalidate();
+			Starry.frame.pack();
+		});
 	}
 	
 }
