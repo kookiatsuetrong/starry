@@ -43,10 +43,15 @@ class Starry {
 	public static int HTML_PAD       =  6;
 	public static JFrame frame;
 	public static Outer outer;
+	public static Wrapper wrapper;
+	public static JFXPanel panel;
+	
+	public static Starry instance;
 	
 	Starry(String file) {
 		this();
 		Platform.runLater( () -> loadPage(file) );
+		instance = this;
 	}
 	
 	Starry() {
@@ -54,39 +59,72 @@ class Starry {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setUndecorated(true);
 		frame.setBackground(new java.awt.Color(0,0,0,0));
+		/*
 		frame.setShape(new RoundRectangle2D
 				.Double(0, 0, 
 						WIDTH, HEIGHT,
 						OUTER_RADIUS, OUTER_RADIUS));
+		*/
+		frame.setSize(WIDTH, HEIGHT);
 		outer = new Outer();
-		outer.setPreferredSize(new Dimension(WIDTH, HEIGHT));
+		outer.setLayout(null);
 		frame.setContentPane(outer);
+		
+		Dimension wd = new Dimension(
+							WIDTH  - 2 * WRAPPER_PAD,
+							HEIGHT - 2 * WRAPPER_PAD);
+		wrapper = new Wrapper();
+		wrapper.setLayout(null);
+		wrapper.setBounds(WRAPPER_PAD, WRAPPER_PAD,
+						wd.width, wd.height);
+		
+		Dimension pd = new Dimension(
+						WIDTH  - 2 * (WRAPPER_PAD + HTML_PAD),
+						HEIGHT - 2 * (WRAPPER_PAD + HTML_PAD) );
+		panel = new JFXPanel();
+		panel.setPreferredSize(pd);
+		panel.setBounds(HTML_PAD, HTML_PAD, pd.width, pd.height);
+		wrapper.add(panel);
+		
+		frame.getContentPane().add(wrapper);
+		frame.pack();
 		
 		var toolkit = Toolkit.getDefaultToolkit();
 		var size = toolkit.getScreenSize();
 		frame.setLocation(
 			(size.width  - WIDTH ) / 2,
 			(size.height - HEIGHT) / 2);
-		frame.setSize(WIDTH, HEIGHT);
-		
-		frame.getContentPane().setLayout(null);
-		
-		Wrapper wrapper = new Wrapper();
-		wrapper.setBounds(WRAPPER_PAD, WRAPPER_PAD, 
-				WIDTH  - 2 * WRAPPER_PAD, 
-				HEIGHT - 2 * WRAPPER_PAD);
-		wrapper.setLayout(null);
-		JFXPanel panel = new JFXPanel();
-		panel.setBounds(HTML_PAD, HTML_PAD, 
-				WIDTH  - 2 * (WRAPPER_PAD + HTML_PAD), 
-				HEIGHT - 2 * (WRAPPER_PAD + HTML_PAD));
-		wrapper.add(panel);
-		frame.getContentPane().add(wrapper);
-		
-		frame.pack();
 		frame.setVisible(true);
 		
 		Platform.runLater(() -> createApp(panel));
+	}
+	
+	void increaseTo(int w, int h) {
+		Dimension od = outer.getPreferredSize();
+		increase(w - od.width, h - od.height);
+	}
+	
+	void increase(int w, int h) {
+		Dimension pd = panel.getPreferredSize();
+		pd.width  += w;
+		pd.height += h;
+		panel.setPreferredSize(pd);
+		panel.setBounds(HTML_PAD, HTML_PAD, 
+				pd.width, pd.height);
+		
+		Dimension wd = wrapper.getPreferredSize();
+		wd.width  += w;
+		wd.height += h;
+		wrapper.setPreferredSize(wd);
+		wrapper.setBounds(WRAPPER_PAD, WRAPPER_PAD, 
+					wd.width, wd.height);
+		
+		Dimension od = outer.getPreferredSize();
+		od.width  += w;
+		od.height += h;
+		outer.setPreferredSize(od);
+		
+		frame.setPreferredSize(od);
 	}
 	
 	void createApp(JFXPanel panel) {
@@ -101,41 +139,12 @@ class Starry {
 		var mainStyle = getClass().getResource("main.css");
 		page.getEngine().setUserStyleSheetLocation
 							(mainStyle.toString());
-		
-		/*
-		page.getEngine().setUserStyleSheetLocation
-							("file:./code/main.css");
-		*/
 	}
 	
-	/**
-	 * Forwards to page.getEngine().load()
-	 * 
-	 */
-	public void load(String location) {
-		page.getEngine().load(location);
-	}
-	
-	/**
-	 * Forwards to page.getEngine().loadContent()
-	 * 
-	 */
 	public void loadContent(String content) {
 		page.getEngine().loadContent(content);
 	}
-	
-	/**
-	 * Forwards to page.getEngine().loadContent()
-	 * 
-	 */
-	public void loadContent(String content, String type) {
-		page.getEngine().loadContent(content, type);
-	}
-	
-	/**
-	 * Reads file content from resource, and display as the main view.
-	 * 
-	 */
+
 	public void loadFile(String file) {
 		InputStream input = getClass().getResourceAsStream(file);
         
@@ -153,6 +162,13 @@ class Starry {
 }
 
 class Wrapper extends JPanel {
+	public Wrapper() {
+		super();
+		Dimension d = new Dimension(
+				Starry.WIDTH  - 2 * Starry.WRAPPER_PAD,
+				Starry.HEIGHT - 2 * Starry.WRAPPER_PAD);
+		setPreferredSize(d);
+	}
 	
 	@Override
 	protected void paintComponent(Graphics g) {
@@ -163,10 +179,9 @@ class Wrapper extends JPanel {
 			RenderingHints.VALUE_ANTIALIAS_ON);
 		g2d.setColor(new java.awt.Color(0xF0, 0xF4, 0xFF) );
 		// g2d.setColor(java.awt.Color.GRAY);
-		int w = Starry.WIDTH  - 2 * Starry.WRAPPER_PAD - 2;
-		int h = Starry.HEIGHT - 2 * Starry.WRAPPER_PAD - 2;
+		Dimension d = getPreferredSize();
 		
-		g2d.fillRoundRect(1, 1, w, h, 
+		g2d.fillRoundRect(1, 1, d.width - 1, d.height - 1,
 				Starry.WRAPPER_RADIUS, Starry.WRAPPER_RADIUS);
 	}
 }
@@ -176,9 +191,11 @@ class Outer extends JPanel {
 		super();
 		addMouseListener(new MouseClick());
 		addMouseMotionListener(new MouseMotion());
+		Dimension d = new Dimension(Starry.WIDTH, Starry.HEIGHT);
+		setPreferredSize(d);
 	}
 	
-	java.awt.Color moving  = new java.awt.Color(0,0,0,210);
+	java.awt.Color moving  = new java.awt.Color(0,0,0,64);
 	java.awt.Color display = new java.awt.Color(0xF0, 0xF4, 0xFF, 210);
 	
 	@Override
@@ -188,33 +205,61 @@ class Outer extends JPanel {
 		g2d.setRenderingHint(
 			RenderingHints.KEY_ANTIALIASING,
 			RenderingHints.VALUE_ANTIALIAS_ON);
-		g2d.setColor( MouseMotion.start == null ? display : moving );
+		g2d.setColor(moving);
+		
+		Dimension pref = getPreferredSize();
+		
 		g2d.fillRoundRect(1, 1, 
-				Starry.WIDTH - 2, Starry.HEIGHT - 2, 
+				pref.width - 2, pref.height - 2, 
 				Starry.OUTER_RADIUS, Starry.OUTER_RADIUS);
 	}
-	
-	@Override
-	public Dimension getPreferredSize() {
-		if (isPreferredSizeSet()) {
-			return super.getPreferredSize();            
-		}
-		return new Dimension(Starry.WIDTH, Starry.HEIGHT);
-	}
 }
+
+enum BorderEdge { TOP,RIGHT,BOTTOM,LEFT }
 
 class MouseMotion extends MouseMotionAdapter {
 	
 	public static Point start;
+	public static BorderEdge edge;
 	
 	@Override
 	public void mouseDragged(java.awt.event.MouseEvent e) {
 		if (start == null) return;
 		int x = e.getXOnScreen();
 		int y = e.getYOnScreen();
-		Starry.frame.setLocation(x - start.x, y - start.y);
+		
+		// For moving
+		if (edge == BorderEdge.TOP) {
+			Starry.frame.setLocation(x - start.x, y - start.y);
+		}
+		
+		// For resizing
+		if (edge == BorderEdge.RIGHT) {
+			Point p = Starry.frame.getLocation();
+			Dimension d = Starry.outer.getPreferredSize();
+			int bx = x - p.x - d.width;
+			Starry.instance.increase(bx, 0);
+			Starry.frame.pack();
+		}
+		
+		// For resizing
+		if (edge == BorderEdge.BOTTOM) {
+			Point p = Starry.frame.getLocation();
+			Dimension d = Starry.outer.getPreferredSize();
+			int by = y - p.y - d.height;
+			Starry.instance.increase(0, by);
+			Starry.frame.pack();
+		}
+		
+		// For resizing
+		if (edge == BorderEdge.LEFT) {
+			Point p = Starry.frame.getLocation();
+			Starry.frame.setLocation(x - start.x, p.y);
+			int bx = x - start.x - p.x;
+			Starry.instance.increase(-bx, 0);
+			Starry.frame.pack();
+		}	
 	}
-
 }
 
 class MouseClick extends MouseAdapter {
@@ -224,28 +269,42 @@ class MouseClick extends MouseAdapter {
 		int x = e.getXOnScreen();
 		int y = e.getYOnScreen();
 		
-		Point framePoint = Starry.frame.getLocationOnScreen();
+		Point     framePoint = Starry.frame.getLocationOnScreen();
+		Dimension frameSize  = Starry.outer.getPreferredSize();
+		
 		int dx = x - framePoint.x;
 		int dy = y - framePoint.y;
 		
 		MouseMotion.start = new Point(dx, dy);
+		
+		if (framePoint.y <= y && y <= framePoint.y + Starry.WRAPPER_PAD) {
+			MouseMotion.edge = BorderEdge.TOP;
+			return;
+		}
+		
+		if (framePoint.y + frameSize.height - Starry.WRAPPER_PAD <= y && 
+			y <= framePoint.y + frameSize.height) {
+			MouseMotion.edge = BorderEdge.BOTTOM;
+			return;
+		}
+		
+		if (framePoint.x <= x && x <= framePoint.x + Starry.WRAPPER_PAD) {
+			MouseMotion.edge = BorderEdge.LEFT;
+			return;
+		}
+		
+		if (framePoint.x + frameSize.width - Starry.WRAPPER_PAD <= x &&
+			x <= framePoint.x + frameSize.width) {
+			MouseMotion.edge = BorderEdge.RIGHT;
+			return;
+		}
+		
+		System.out.println("Unknown Edge");
 	}
 	
 	@Override
 	public void mouseReleased(java.awt.event.MouseEvent e) {
 		MouseMotion.start = null;
-		
-		/*
-		System.out.println(e);
-		SwingUtilities.invokeLater( () -> {
-			Dimension s = Starry.frame.getSize();
-			Starry.outer.setPreferredSize
-						(new Dimension(s.width + 10, s.height));
-			Starry.frame.setPreferredSize
-						(new Dimension(s.width + 10, s.height));
-			Starry.frame.invalidate();
-			Starry.frame.pack();
-		}); */
 	}
 	
 }
