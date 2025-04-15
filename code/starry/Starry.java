@@ -12,7 +12,7 @@ import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseMotionAdapter;
-import javax.swing.ImageIcon;
+
 import javax.swing.JFrame;
 import javafx.scene.Scene;
 import javafx.scene.web.WebView;
@@ -45,10 +45,10 @@ public class Starry {
 		frame = new JFrame();
 		
 		ArrayList<Image> list = new ArrayList<>();
-		Toolkit kit = Toolkit.getDefaultToolkit();
+		Toolkit toolkit = Toolkit.getDefaultToolkit();
 		URL resource = getClass().getClassLoader()
 						.getResource("icon-128.png");
-		Image image = kit.getImage(resource);
+		Image image = toolkit.getImage(resource);
 		frame.setIconImage(image);
 		list.add(image);
 		frame.setIconImages(list);
@@ -87,8 +87,7 @@ public class Starry {
 		frame.getContentPane().add(wrapper);
 		frame.pack();
 		
-		var toolkit = Toolkit.getDefaultToolkit();
-		var size = toolkit.getScreenSize();
+		Dimension size = toolkit.getScreenSize();
 		frame.setLocation(
 			(size.width  - WIDTH ) / 2,
 			(size.height - HEIGHT) / 2);
