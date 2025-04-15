@@ -66,11 +66,19 @@ public class Starry {
 		
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setUndecorated(true);
-		// frame.setBackground(new java.awt.Color(0,0,0,0));
-
+		
+		/* for Ubuntu / GNOME 
 		frame.setShape(new RoundRectangle2D
 				.Double(1, 1, 
 						WIDTH-2, HEIGHT-2,
+						OUTER_RADIUS, OUTER_RADIUS));
+		*/
+		
+		frame.setBackground(new java.awt.Color(0,0,0,0));
+
+		frame.setShape(new RoundRectangle2D
+				.Double(0, 0,
+						WIDTH, HEIGHT,
 						OUTER_RADIUS, OUTER_RADIUS));
 
 		frame.setSize(WIDTH, HEIGHT);
@@ -128,16 +136,23 @@ public class Starry {
 		outer.setPreferredSize(od);
 		
 		frame.setPreferredSize(od);
+		/* For Ubuntu / GNOME
 		frame.setShape(new RoundRectangle2D
 			.Double(1, 1, 
 				od.width-2, od.height-2,
 				OUTER_RADIUS, OUTER_RADIUS));
+		*/
+		
+		frame.setShape(new RoundRectangle2D
+			.Double(0, 0, 
+				od.width, od.height,
+				OUTER_RADIUS, OUTER_RADIUS));
 		frame.pack();
 		
+		/* Try this
 		SwingUtilities.invokeLater( () -> {
 			frame.revalidate();
-			// outer.validate();
-		});
+		}); */
 	}
 	
 	void createApp(JFXPanel panel) {
