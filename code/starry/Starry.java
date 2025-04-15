@@ -10,10 +10,12 @@ import java.awt.Point;
 import java.awt.Toolkit;
 import java.awt.Component;
 import java.awt.Dimension;
+import java.awt.geom.RoundRectangle2D;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseMotionAdapter;
 
 import javax.swing.JFrame;
+import javax.swing.SwingUtilities;
 import javafx.scene.Scene;
 import javafx.scene.web.WebView;
 import javafx.application.Platform;
@@ -64,13 +66,13 @@ public class Starry {
 		
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setUndecorated(true);
-		frame.setBackground(new java.awt.Color(0,0,0,0));
-		/*
+		// frame.setBackground(new java.awt.Color(0,0,0,0));
+
 		frame.setShape(new RoundRectangle2D
-				.Double(0, 0, 
-						WIDTH, HEIGHT,
+				.Double(1, 1, 
+						WIDTH-2, HEIGHT-2,
 						OUTER_RADIUS, OUTER_RADIUS));
-		*/
+
 		frame.setSize(WIDTH, HEIGHT);
 				
 		outer = new Outer();
@@ -126,7 +128,16 @@ public class Starry {
 		outer.setPreferredSize(od);
 		
 		frame.setPreferredSize(od);
+		frame.setShape(new RoundRectangle2D
+			.Double(1, 1, 
+				od.width-2, od.height-2,
+				OUTER_RADIUS, OUTER_RADIUS));
 		frame.pack();
+		
+		SwingUtilities.invokeLater( () -> {
+			frame.revalidate();
+			// outer.validate();
+		});
 	}
 	
 	void createApp(JFXPanel panel) {
