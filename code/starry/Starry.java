@@ -46,11 +46,20 @@ public class Starry {
 		
 		ArrayList<Image> list = new ArrayList<>();
 		Toolkit toolkit = Toolkit.getDefaultToolkit();
-		URL resource = getClass().getClassLoader()
-						.getResource("icon-128.png");
-		Image image = toolkit.getImage(resource);
-		frame.setIconImage(image);
-		list.add(image);
+		
+		String[] icons = {"icon-128.png",
+							"icon-64.png",
+							"icon-32.png",
+							"icon-24.png",
+							"icon-16.png" };
+		for (String icon : icons) {
+			URL resource = getClass().getClassLoader()
+							.getResource(icon);
+			Image image = toolkit.getImage(resource);
+			// frame.setIconImage(image);
+			list.add(image);
+		}
+		
 		frame.setIconImages(list);
 		
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
