@@ -37,6 +37,10 @@ class Starry {
 	WebView page;
 	public static int WIDTH  = 480;
 	public static int HEIGHT = 360;
+	public static int OUTER_RADIUS   = 36;
+	public static int WRAPPER_RADIUS = 18;
+	public static int WRAPPER_PAD    = 12;
+	public static int HTML_PAD       =  6;
 	public static JFrame frame;
 	public static Outer outer;
 	
@@ -51,7 +55,9 @@ class Starry {
 		frame.setUndecorated(true);
 		frame.setBackground(new java.awt.Color(0,0,0,0));
 		frame.setShape(new RoundRectangle2D
-				.Double(0, 0, WIDTH, HEIGHT, 25, 25));
+				.Double(0, 0, 
+						WIDTH, HEIGHT,
+						OUTER_RADIUS, OUTER_RADIUS));
 		outer = new Outer();
 		outer.setPreferredSize(new Dimension(WIDTH, HEIGHT));
 		frame.setContentPane(outer);
@@ -66,10 +72,14 @@ class Starry {
 		frame.getContentPane().setLayout(null);
 		
 		Wrapper wrapper = new Wrapper();
-		wrapper.setBounds(10, 10, WIDTH - 20, HEIGHT - 20);
+		wrapper.setBounds(WRAPPER_PAD, WRAPPER_PAD, 
+				WIDTH  - 2 * WRAPPER_PAD, 
+				HEIGHT - 2 * WRAPPER_PAD);
 		wrapper.setLayout(null);
 		JFXPanel panel = new JFXPanel();
-		panel.setBounds(6,6, WIDTH - 32, HEIGHT - 32);
+		panel.setBounds(HTML_PAD, HTML_PAD, 
+				WIDTH  - 2 * (WRAPPER_PAD + HTML_PAD), 
+				HEIGHT - 2 * (WRAPPER_PAD + HTML_PAD));
 		wrapper.add(panel);
 		frame.getContentPane().add(wrapper);
 		
@@ -82,6 +92,7 @@ class Starry {
 	void createApp(JFXPanel panel) {
 		page = new WebView();
 		Scene scene = new Scene(page);
+		scene.getStylesheets().add("app.css");
 		panel.setScene(scene);
 	}
 	
@@ -152,9 +163,11 @@ class Wrapper extends JPanel {
 			RenderingHints.VALUE_ANTIALIAS_ON);
 		g2d.setColor(new java.awt.Color(0xF0, 0xF4, 0xFF) );
 		// g2d.setColor(java.awt.Color.GRAY);
-		g2d.fillRoundRect(1, 1, 
-				Starry.WIDTH - 22, Starry.HEIGHT - 22, 
-				14, 14);
+		int w = Starry.WIDTH  - 2 * Starry.WRAPPER_PAD - 2;
+		int h = Starry.HEIGHT - 2 * Starry.WRAPPER_PAD - 2;
+		
+		g2d.fillRoundRect(1, 1, w, h, 
+				Starry.WRAPPER_RADIUS, Starry.WRAPPER_RADIUS);
 	}
 }
 
@@ -165,8 +178,8 @@ class Outer extends JPanel {
 		addMouseMotionListener(new MouseMotion());
 	}
 	
-	java.awt.Color moving  = new java.awt.Color(0,0,0,220);
-	java.awt.Color display = new java.awt.Color(0xF0, 0xF4, 0xFF, 220);
+	java.awt.Color moving  = new java.awt.Color(0,0,0,210);
+	java.awt.Color display = new java.awt.Color(0xF0, 0xF4, 0xFF, 210);
 	
 	@Override
 	protected void paintComponent(Graphics g) {
@@ -178,7 +191,7 @@ class Outer extends JPanel {
 		g2d.setColor( MouseMotion.start == null ? display : moving );
 		g2d.fillRoundRect(1, 1, 
 				Starry.WIDTH - 2, Starry.HEIGHT - 2, 
-				25, 25);
+				Starry.OUTER_RADIUS, Starry.OUTER_RADIUS);
 	}
 	
 	@Override
@@ -222,6 +235,7 @@ class MouseClick extends MouseAdapter {
 	public void mouseReleased(java.awt.event.MouseEvent e) {
 		MouseMotion.start = null;
 		
+		/*
 		System.out.println(e);
 		SwingUtilities.invokeLater( () -> {
 			Dimension s = Starry.frame.getSize();
@@ -231,7 +245,7 @@ class MouseClick extends MouseAdapter {
 						(new Dimension(s.width + 10, s.height));
 			Starry.frame.invalidate();
 			Starry.frame.pack();
-		});
+		}); */
 	}
 	
 }

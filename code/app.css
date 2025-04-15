@@ -24,3 +24,13 @@
 	-fx-background-color: dodgerblue;
 	-fx-border-radius: 5;
 }
+.corner {
+	-fx-background-color: black;
+}
+.web-view .scroll-bar .corner {    
+    -fx-background-color: black;
+}
+.web-view .scroll-pane .corner {    
+    -fx-background-color: black;
+}
+
