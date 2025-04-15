@@ -1,3 +1,5 @@
+import java.awt.Component;
+import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -99,18 +101,13 @@ class Starry {
 		Platform.runLater(() -> createApp(panel));
 	}
 	
-	void increaseTo(int w, int h) {
-		Dimension od = outer.getPreferredSize();
-		increase(w - od.width, h - od.height);
-	}
-	
-	void increase(int w, int h) {
+	void resizeBy(int w, int h) {
 		Dimension pd = panel.getPreferredSize();
 		pd.width  += w;
 		pd.height += h;
-		panel.setPreferredSize(pd);
 		panel.setBounds(HTML_PAD, HTML_PAD, 
 				pd.width, pd.height);
+		panel.setPreferredSize(pd);
 		
 		Dimension wd = wrapper.getPreferredSize();
 		wd.width  += w;
@@ -125,6 +122,7 @@ class Starry {
 		outer.setPreferredSize(od);
 		
 		frame.setPreferredSize(od);
+		frame.pack();
 	}
 	
 	void createApp(JFXPanel panel) {
@@ -215,7 +213,7 @@ class Outer extends JPanel {
 	}
 }
 
-enum BorderEdge { TOP,RIGHT,BOTTOM,LEFT }
+enum BorderEdge { TOP, RIGHT, BOTTOM, LEFT }
 
 class MouseMotion extends MouseMotionAdapter {
 	
@@ -237,27 +235,24 @@ class MouseMotion extends MouseMotionAdapter {
 		if (edge == BorderEdge.RIGHT) {
 			Point p = Starry.frame.getLocation();
 			Dimension d = Starry.outer.getPreferredSize();
-			int bx = x - p.x - d.width;
-			Starry.instance.increase(bx, 0);
-			Starry.frame.pack();
+			int tx = x - p.x - d.width;
+			Starry.instance.resizeBy(tx, 0);
 		}
 		
 		// For resizing
 		if (edge == BorderEdge.BOTTOM) {
 			Point p = Starry.frame.getLocation();
 			Dimension d = Starry.outer.getPreferredSize();
-			int by = y - p.y - d.height;
-			Starry.instance.increase(0, by);
-			Starry.frame.pack();
+			int ty = y - p.y - d.height;
+			Starry.instance.resizeBy(0, ty);
 		}
 		
 		// For resizing
 		if (edge == BorderEdge.LEFT) {
 			Point p = Starry.frame.getLocation();
 			Starry.frame.setLocation(x - start.x, p.y);
-			int bx = x - start.x - p.x;
-			Starry.instance.increase(-bx, 0);
-			Starry.frame.pack();
+			int tx = x - start.x - p.x;
+			Starry.instance.resizeBy(-tx, 0);
 		}	
 	}
 }
@@ -279,12 +274,16 @@ class MouseClick extends MouseAdapter {
 		
 		if (framePoint.y <= y && y <= framePoint.y + Starry.WRAPPER_PAD) {
 			MouseMotion.edge = BorderEdge.TOP;
+			Component c = (Component)Starry.frame;
+			c.setCursor(new Cursor(Cursor.MOVE_CURSOR));
 			return;
 		}
 		
 		if (framePoint.y + frameSize.height - Starry.WRAPPER_PAD <= y && 
 			y <= framePoint.y + frameSize.height) {
 			MouseMotion.edge = BorderEdge.BOTTOM;
+			Component c = (Component)Starry.frame;
+			c.setCursor(new Cursor(Cursor.S_RESIZE_CURSOR));
 			return;
 		}
 		
@@ -305,6 +304,8 @@ class MouseClick extends MouseAdapter {
 	@Override
 	public void mouseReleased(java.awt.event.MouseEvent e) {
 		MouseMotion.start = null;
+		Component c = (Component)Starry.frame;
+		c.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
 	}
 	
 }
