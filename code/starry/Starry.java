@@ -47,11 +47,12 @@ public class Starry {
 		ArrayList<Image> list = new ArrayList<>();
 		Toolkit kit = Toolkit.getDefaultToolkit();
 		URL resource = getClass().getClassLoader()
-						.getResource("icon-black.png");
+						.getResource("icon-128.png");
 		Image image = kit.getImage(resource);
+		frame.setIconImage(image);
 		list.add(image);
-		
 		frame.setIconImages(list);
+		
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setUndecorated(true);
 		frame.setBackground(new java.awt.Color(0,0,0,0));
