@@ -66,23 +66,24 @@ public class Starry {
 		
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setUndecorated(true);
+		frame.setSize(WIDTH, HEIGHT);
 		
-		/* for Ubuntu / GNOME 
+		/* for Ubuntu / GNOME */
 		frame.setShape(new RoundRectangle2D
 				.Double(1, 1, 
 						WIDTH-2, HEIGHT-2,
 						OUTER_RADIUS, OUTER_RADIUS));
-		*/
-		
-		frame.setBackground(new java.awt.Color(0,0,0,0));
+		frame.setBackground(new java.awt.Color(0,0,0));
 
+		/* For Windows / macOS */
+		/*
 		frame.setShape(new RoundRectangle2D
 				.Double(0, 0,
 						WIDTH, HEIGHT,
 						OUTER_RADIUS, OUTER_RADIUS));
-
-		frame.setSize(WIDTH, HEIGHT);
-				
+		frame.setBackground(new java.awt.Color(0,0,0,0));
+		*/
+		
 		outer = new Outer();
 		outer.setLayout(null);
 		frame.setContentPane(outer);
@@ -136,23 +137,24 @@ public class Starry {
 		outer.setPreferredSize(od);
 		
 		frame.setPreferredSize(od);
-		/* For Ubuntu / GNOME
+		/* For Ubuntu / GNOME */
 		frame.setShape(new RoundRectangle2D
 			.Double(1, 1, 
 				od.width-2, od.height-2,
 				OUTER_RADIUS, OUTER_RADIUS));
-		*/
 		
+		/* For Windows / macOS */
+		/*
 		frame.setShape(new RoundRectangle2D
 			.Double(0, 0, 
 				od.width, od.height,
 				OUTER_RADIUS, OUTER_RADIUS));
-		frame.pack();
-		
-		/* Try this
+		*/
+				
 		SwingUtilities.invokeLater( () -> {
+			frame.pack();
 			frame.revalidate();
-		}); */
+		});
 	}
 	
 	void createApp(JFXPanel panel) {
@@ -289,5 +291,6 @@ class MouseClick extends MouseAdapter {
 		MouseMotion.start = null;
 		Component c = (Component)Starry.frame;
 		c.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+		Starry.instance.resizeBy(0,0);
 	}
 }
