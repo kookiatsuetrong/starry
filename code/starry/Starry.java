@@ -61,38 +61,40 @@ public class Starry {
 			// frame.setIconImage(image);
 			list.add(image);
 		}
-		
 		frame.setIconImages(list);
 		
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setUndecorated(true);
-		frame.setSize(WIDTH, HEIGHT);
+		Dimension fd = new Dimension(WIDTH, HEIGHT);
+		frame.setPreferredSize(fd);
+		frame.setSize(fd);
 		
-		/* for Ubuntu / GNOME */
+		outer = new Outer();
+		outer.setLayout(null);
+		frame.setContentPane(outer);
+		
+		// For Ubuntu / GNOME
+		/*
 		frame.setShape(new RoundRectangle2D
 				.Double(1, 1, 
 						WIDTH-2, HEIGHT-2,
 						OUTER_RADIUS, OUTER_RADIUS));
 		frame.setBackground(new java.awt.Color(0,0,0));
-
-		/* For Windows / macOS */
-		/*
+		*/
+		
+		// For Windows / macOS
 		frame.setShape(new RoundRectangle2D
 				.Double(0, 0,
 						WIDTH, HEIGHT,
 						OUTER_RADIUS, OUTER_RADIUS));
 		frame.setBackground(new java.awt.Color(0,0,0,0));
-		*/
-		
-		outer = new Outer();
-		outer.setLayout(null);
-		frame.setContentPane(outer);
 		
 		Dimension wd = new Dimension(
 							WIDTH  - 2 * WRAPPER_PAD,
 							HEIGHT - 2 * WRAPPER_PAD);
 		wrapper = new Wrapper();
 		wrapper.setLayout(null);
+		wrapper.setPreferredSize(wd);
 		wrapper.setBounds(WRAPPER_PAD, WRAPPER_PAD,
 						wd.width, wd.height);
 		
@@ -104,7 +106,7 @@ public class Starry {
 		panel.setBounds(HTML_PAD, HTML_PAD, pd.width, pd.height);
 		wrapper.add(panel);
 		
-		frame.getContentPane().add(wrapper);
+		outer.add(wrapper);
 		frame.pack();
 		
 		Dimension size = toolkit.getScreenSize();
@@ -137,19 +139,20 @@ public class Starry {
 		outer.setPreferredSize(od);
 		
 		frame.setPreferredSize(od);
-		/* For Ubuntu / GNOME */
+		
+		// For Ubuntu / GNOME
+		/*
 		frame.setShape(new RoundRectangle2D
 			.Double(1, 1, 
 				od.width-2, od.height-2,
 				OUTER_RADIUS, OUTER_RADIUS));
+		*/
 		
-		/* For Windows / macOS */
-		/*
+		// For Windows / macOS
 		frame.setShape(new RoundRectangle2D
 			.Double(0, 0, 
 				od.width, od.height,
 				OUTER_RADIUS, OUTER_RADIUS));
-		*/
 				
 		SwingUtilities.invokeLater( () -> {
 			frame.pack();
