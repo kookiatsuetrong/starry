@@ -15,18 +15,22 @@ public class Outer extends JPanel {
 		setPreferredSize(d);
 	}
 	
-	java.awt.Color color = new java.awt.Color(0,0,0,128);   // Windows / macOS
-	// java.awt.Color color = new java.awt.Color(51,51,51); // Linux
-	java.awt.Color display = new java.awt.Color(0xF0, 0xF4, 0xFF, 210);
+	java.awt.Color color = new java.awt.Color(0,0,0,128);
+	java.awt.Color colorLinux = new java.awt.Color(196,196,196);
 	
 	@Override
 	protected void paintComponent(Graphics g) {
 		Graphics2D g2d = (Graphics2D)g;
-		g2d.setBackground(new java.awt.Color(0,0,0,0));
 		g2d.setRenderingHint(
 			RenderingHints.KEY_ANTIALIASING,
 			RenderingHints.VALUE_ANTIALIAS_ON);
-		g2d.setColor(color);
+		if (Starry.operatingSystem.equals("Linux")) {
+			g2d.setColor(colorLinux);
+		}
+		if (Starry.operatingSystem.equals("Linux") == false) {
+			g2d.setBackground(new java.awt.Color(0,0,0,0));
+			g2d.setColor(color);
+		}
 		
 		Dimension pref = getPreferredSize();
 		g2d.fillRoundRect(1, 1, 

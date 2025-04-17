@@ -46,18 +46,15 @@ public class Starry {
 	
 	public static Starry instance;
 	
-	String operatingSystem = "";
+	public static String operatingSystem = "";
 	
 	public Starry() {
 		instance = this;
-		
 		operatingSystem = System.getProperty("os.name");
-		
 		frame = new CustomFrame();
 		
 		ArrayList<Image> list = new ArrayList<>();
 		Toolkit toolkit = Toolkit.getDefaultToolkit();
-		
 		String[] icons = {"icon-128.png",
 							"icon-64.png",
 							"icon-32.png",
@@ -84,9 +81,9 @@ public class Starry {
 		// For Linux
 		if (operatingSystem.equals("Linux")) {
 			frame.setShape(new RoundRectangle2D
-					.Double(1, 1, 
+					.Double(1, 1,
 							WIDTH - 2, HEIGHT - 2,
-							OUTER_RADIUS, OUTER_RADIUS));
+							OUTER_RADIUS + 2, OUTER_RADIUS + 2));
 			
 			frame.setBackground(new java.awt.Color(0,0,0));
 		}
@@ -146,15 +143,14 @@ public class Starry {
 		od.width  += w;
 		od.height += h;
 		outer.setPreferredSize(od);
-		
 		frame.setPreferredSize(od);
 		
 		// For Ubuntu / GNOME
 		if (operatingSystem.equals("Linux")) {
 			frame.setShape(new RoundRectangle2D
-				.Double(1, 1, 
-					od.width-2, od.height-2,
-					OUTER_RADIUS, OUTER_RADIUS));
+				.Double(1, 1,
+					od.width - 2, od.height - 2,
+					OUTER_RADIUS + 2, OUTER_RADIUS + 2));
 		}
 		
 		// For Windows / macOS
@@ -167,7 +163,7 @@ public class Starry {
 		
 		SwingUtilities.invokeLater( () -> {
 			frame.pack();
-			frame.revalidate();
+			// frame.revalidate();
 		});
 	}
 	
@@ -313,12 +309,12 @@ public class Starry {
 }
 
 class CustomFrame extends JFrame {
-
+	/*
 	java.awt.Color color = new java.awt.Color(0,0,0,128);   // Windows / macOS
 	
-	/*
 	@Override
-	protected void paintComponent(Graphics g) {
+	public void paint(Graphics g) {
+		super.paint(g);
 		Graphics2D g2d = (Graphics2D)g;
 		g2d.setBackground(new java.awt.Color(0,0,0,0));
 		g2d.setRenderingHint(
