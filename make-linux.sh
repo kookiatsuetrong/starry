@@ -13,4 +13,5 @@ jdk/bin/java --class-path "code"   \
 	--enable-native-access javafx.graphics \
 	--enable-native-access javafx.web      \
 	--sun-misc-unsafe-memory-access=allow  \
+	-Dsun.java2d.uiScale.enabled=true \
 	Start

@@ -15,8 +15,8 @@ public class Outer extends JPanel {
 		setPreferredSize(d);
 	}
 	
-	java.awt.Color moving  = new java.awt.Color(0,0,0,128);    // Windows / macOS
-	// java.awt.Color moving  = new java.awt.Color(51,51,51);  // Linux
+	java.awt.Color color = new java.awt.Color(0,0,0,128);   // Windows / macOS
+	// java.awt.Color color = new java.awt.Color(51,51,51); // Linux
 	java.awt.Color display = new java.awt.Color(0xF0, 0xF4, 0xFF, 210);
 	
 	@Override
@@ -26,7 +26,7 @@ public class Outer extends JPanel {
 		g2d.setRenderingHint(
 			RenderingHints.KEY_ANTIALIASING,
 			RenderingHints.VALUE_ANTIALIAS_ON);
-		g2d.setColor(moving);
+		g2d.setColor(color);
 		
 		Dimension pref = getPreferredSize();
 		g2d.fillRoundRect(1, 1, 

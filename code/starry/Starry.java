@@ -14,6 +14,10 @@ import java.awt.geom.RoundRectangle2D;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseMotionAdapter;
 
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.RenderingHints;
+
 import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
 import javafx.scene.Scene;
@@ -35,16 +39,21 @@ public class Starry {
 	public static int WRAPPER_RADIUS = 18;
 	public static int WRAPPER_PAD    = 12;
 	public static int HTML_PAD       =  6;
-	public static JFrame frame;
+	public static CustomFrame frame;
 	public static Outer outer;
 	public static Wrapper wrapper;
 	public static JFXPanel panel;
 	
 	public static Starry instance;
 	
+	String operatingSystem = "";
+	
 	public Starry() {
 		instance = this;
-		frame = new JFrame();
+		
+		operatingSystem = System.getProperty("os.name");
+		
+		frame = new CustomFrame();
 		
 		ArrayList<Image> list = new ArrayList<>();
 		Toolkit toolkit = Toolkit.getDefaultToolkit();
@@ -67,26 +76,29 @@ public class Starry {
 		Dimension fd = new Dimension(WIDTH, HEIGHT);
 		frame.setPreferredSize(fd);
 		frame.setSize(fd);
-		
+		frame.setOpacity(0.25f);
 		outer = new Outer();
 		outer.setLayout(null);
 		frame.setContentPane(outer);
 		
-		// For Ubuntu / GNOME
-		/*
-		frame.setShape(new RoundRectangle2D
-				.Double(1, 1, 
-						WIDTH-2, HEIGHT-2,
-						OUTER_RADIUS, OUTER_RADIUS));
-		frame.setBackground(new java.awt.Color(0,0,0));
-		*/
+		// For Linux
+		if (operatingSystem.equals("Linux")) {
+			frame.setShape(new RoundRectangle2D
+					.Double(1, 1, 
+							WIDTH - 2, HEIGHT - 2,
+							OUTER_RADIUS, OUTER_RADIUS));
+			
+			frame.setBackground(new java.awt.Color(0,0,0));
+		}
 		
 		// For Windows / macOS
-		frame.setShape(new RoundRectangle2D
+		if (operatingSystem.equals("Linux") == false) {
+			frame.setShape(new RoundRectangle2D
 				.Double(0, 0,
 						WIDTH, HEIGHT,
 						OUTER_RADIUS, OUTER_RADIUS));
-		frame.setBackground(new java.awt.Color(0,0,0,0));
+			frame.setBackground(new java.awt.Color(0,0,0,0));
+		}
 		
 		Dimension wd = new Dimension(
 							WIDTH  - 2 * WRAPPER_PAD,
@@ -138,19 +150,21 @@ public class Starry {
 		frame.setPreferredSize(od);
 		
 		// For Ubuntu / GNOME
-		/*
-		frame.setShape(new RoundRectangle2D
-			.Double(1, 1, 
-				od.width-2, od.height-2,
-				OUTER_RADIUS, OUTER_RADIUS));
-		*/
+		if (operatingSystem.equals("Linux")) {
+			frame.setShape(new RoundRectangle2D
+				.Double(1, 1, 
+					od.width-2, od.height-2,
+					OUTER_RADIUS, OUTER_RADIUS));
+		}
 		
 		// For Windows / macOS
-		frame.setShape(new RoundRectangle2D
-			.Double(0, 0, 
-				od.width, od.height,
-				OUTER_RADIUS, OUTER_RADIUS));
-				
+		if (operatingSystem.equals("Linux") == false) {
+			frame.setShape(new RoundRectangle2D
+				.Double(0, 0, 
+					od.width, od.height,
+					OUTER_RADIUS, OUTER_RADIUS));
+		}
+		
 		SwingUtilities.invokeLater( () -> {
 			frame.pack();
 			frame.revalidate();
@@ -298,6 +312,27 @@ public class Starry {
 	
 }
 
+class CustomFrame extends JFrame {
+
+	java.awt.Color color = new java.awt.Color(0,0,0,128);   // Windows / macOS
+	
+	/*
+	@Override
+	protected void paintComponent(Graphics g) {
+		Graphics2D g2d = (Graphics2D)g;
+		g2d.setBackground(new java.awt.Color(0,0,0,0));
+		g2d.setRenderingHint(
+			RenderingHints.KEY_ANTIALIASING,
+			RenderingHints.VALUE_ANTIALIAS_ON);
+		g2d.setColor(color);
+		
+		Dimension pref = getPreferredSize();
+		g2d.fillRoundRect(1, 1, 
+				pref.width - 2, pref.height - 2, 
+				Starry.OUTER_RADIUS, Starry.OUTER_RADIUS);
+	}
+	*/
+}
 
 enum BorderEdge { TOP, RIGHT, BOTTOM, LEFT }
 
