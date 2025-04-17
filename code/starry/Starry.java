@@ -73,7 +73,7 @@ public class Starry {
 		Dimension fd = new Dimension(WIDTH, HEIGHT);
 		frame.setPreferredSize(fd);
 		frame.setSize(fd);
-		frame.setOpacity(0.25f);
+		// frame.setOpacity(0.25f);
 		outer = new Outer();
 		outer.setLayout(null);
 		frame.setContentPane(outer);
