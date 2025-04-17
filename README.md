@@ -312,15 +312,12 @@ Common Framework Methods & Fields
 
 ```Java
 public void setAction(event, handler)
-public void load(String location)
-public void loadContent(String content)
+public void loadURL(String location)
+public void loadString(String content)
 public void loadFile(String file)
 public Element getElement(String identifier)
 public Element createElement(String tag)
 
-public WebView page;
-public Stage mainStage;
-public Scene mainScene;
 ```
 
 ## To Do
