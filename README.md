@@ -30,14 +30,13 @@ curl https://codestar.work/starry-darwin-a64.sh | sh
 Simple App
 
 ```java
-import starry.StarryApp;
+import starry.Starry;
 
-public class Start extends StarryApp {
-	
-	public void main() {
-		load("https://google.com");
+public class Start {
+	public static void main(String[] data) {
+		Starry app = new Starry();
+		app.loadURL("https://google.com");
 	}
-
 }
 ```
 
@@ -67,24 +66,27 @@ setAction("love-button", Start::showLove);
 Sample Code
 
 ```java
-import starry.StarryApp;
-import javafx.application.Platform;
+import starry.Starry;
 import org.w3c.dom.events.Event;
 
-public class Start extends StarryApp {
-	
-	public void main() {
-		loadContent(content);
+public class Start {
+	public static void main(String[] data) {
+		new Start().run();
 	}
 	
-	public void setup() {
-		setAction("sample-button", e -> exit(e) );
+	void run() {
+		Starry app = new Starry();
+		app.loadString(content);
+		app.whenReady( () -> setup(app) );
+	}
+	void setup(Starry app) {
+		app.setAction("sample-button", e -> exit(e) );
 	}
 	
 	void exit(Event event) {
-		Platform.exit();
+		System.exit(0);
 	}
-	
+
 	String content = 
 	"""
 	<html>
@@ -106,19 +108,23 @@ public class Start extends StarryApp {
 Toggle Button
 
 ```java
-import starry.StarryApp;
-import javafx.application.Platform;
+import starry.Starry;
 import org.w3c.dom.events.Event;
 import org.w3c.dom.Element;
 
-public class Start extends StarryApp {
-	
-	public void main() {
-		loadContent(content);
+public class Start {
+	public static void main(String[] data) {
+		new Start().run();
 	}
 	
-	public void setup() {
-		setAction("sample-button", e -> change(e) );
+	void run() {
+		Starry app = new Starry();
+		app.loadString(content);
+		app.whenReady( () -> setup(app) );
+	}
+	
+	void setup(Starry app) {
+		app.setAction("sample-button", e -> change(e) );
 	}
 	
 	void change(Event event) {
@@ -149,28 +155,29 @@ public class Start extends StarryApp {
 Love Hate
 
 ```java
-import starry.StarryApp;
-import javafx.application.Platform;
-import org.w3c.dom.Document;
+import starry.Starry;
 import org.w3c.dom.Element;
-import org.w3c.dom.events.Event;
 
-public class Start extends StarryApp {
-	
-	public void main() {
-		loadContent(content);
+public class Start {
+	public static void main(String[] data) {
+		new Start().run();
 	}
 	
-	public void setup() {
-		setAction("love-button", e -> add("Love") );
-		setAction("hate-button", e -> add("Hate") );
+	void run() {
+		Starry app = new Starry();
+		app.loadString(content);
+		app.whenReady( () -> setup(app) );
 	}
 	
-	void add(String message) {
-		Document document = page.getEngine().getDocument();
-		Element report = document.getElementById("report");
+	void setup(Starry app) {
+		app.setAction("love-button", e -> add("Love", app) );
+		app.setAction("hate-button", e -> add("Hate", app) );
+	}
+	
+	void add(String message, Starry app) {
+		Element report = app.getElement("report");
 		
-		Element item = document.createElement("p");
+		Element item = app.createElement("p");
 		try {
 			item.setTextContent(message);
 			report.appendChild(item);
@@ -200,29 +207,31 @@ public class Start extends StarryApp {
 
 Todo Application
 ```java
-import starry.StarryApp;
-import org.w3c.dom.Element;
-import org.w3c.dom.events.Event;
+import starry.Starry;
 import org.w3c.dom.html.HTMLInputElement;
 
-public class Start extends StarryApp {
-	
-	public void main() {
-		loadContent(content);
+public class Start {
+	public static void main(String[] data) {
+		new Start().run();
 	}
 	
-	public void setup() {
-		setAction("add-button", e -> add() );
+	Starry app = new Starry();
+	
+	void run() {
+		app.loadString(content);
+		app.whenReady( () -> setup() );
+	}
+	
+	void setup() {
+		app.setAction("add-button", e -> add() );
 	}
 	
 	void add() {
-		var input  = (HTMLInputElement)getElement("task");
-		var report = getElement("report");
-		var item   = createElement("p");
-		try {
-			item.setTextContent(input.getValue());
-			report.appendChild(item);
-		} catch (Exception e) { }
+		var input  = (HTMLInputElement)app.getElement("task");
+		var report = app.getElement("report");
+		var item   = app.createElement("p");
+		item.setTextContent(input.getValue());
+		report.appendChild(item);
 		input.setValue("");
 	}
 	
@@ -247,7 +256,7 @@ public class Start extends StarryApp {
 ```
 ![](photo/starry-to-do.png)
 
-Refreshing Dynamically
+Refreshing Dynamically (TODO: Update this code)
 ```java
 import starry.StarryApp;
 
@@ -259,6 +268,39 @@ public class Start extends StarryApp {
 	
 	public void setup() {
 		setAction("refresh", e -> main() );
+	}
+}
+```
+
+Additional Sample Code
+```
+import starry.Starry;
+import org.w3c.dom.events.Event;
+
+public class Start {
+	public static void main(String[] data) {
+		Starry app = new Starry();
+		app.loadFile("main.html");
+		app.whenReady( () -> setup(app) );
+	}
+
+	static void setup(Starry app) {
+		app.setAction("refresh", Start::showRefresh);
+		app.setAction("love-button", e -> System.out.println("Love") );
+		app.setAction("hate-button", e -> System.out.println("Hate") );
+
+		String arch = System.getProperty("os.arch");
+		System.out.println(arch);
+
+		String os = System.getProperty("os.name");
+		System.out.println(os);
+
+		app.setText("report-arch", arch);
+		app.setText("report-os", os);
+	}
+	
+	static void showRefresh(Event e) {
+		System.out.println("Refreshing");
 	}
 }
 ```

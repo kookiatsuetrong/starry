@@ -48,6 +48,7 @@ input {
 	font-size: 1rem;
 	border: .1rem #eee solid;
 	width: calc(100% - 1.2rem);
+	margin-bottom: .5rem;
 }
 input:focus {
 	background: white;

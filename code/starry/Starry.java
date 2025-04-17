@@ -19,7 +19,12 @@ import javax.swing.SwingUtilities;
 import javafx.scene.Scene;
 import javafx.scene.web.WebView;
 import javafx.application.Platform;
+import javafx.concurrent.Worker;
 import javafx.embed.swing.JFXPanel;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.events.EventListener;
+import org.w3c.dom.events.EventTarget;
 
 public class Starry {
 	
@@ -37,13 +42,8 @@ public class Starry {
 	
 	public static Starry instance;
 	
-	public Starry(String file) {
-		this();
-		Platform.runLater( () -> loadPage(file) );
-		instance = this;
-	}
-	
 	public Starry() {
+		instance = this;
 		frame = new JFrame();
 		
 		ArrayList<Image> list = new ArrayList<>();
@@ -56,9 +56,8 @@ public class Starry {
 							"icon-16.png" };
 		for (String icon : icons) {
 			URL resource = getClass().getClassLoader()
-							.getResource(icon);
+							.getResource("starry/" + icon);
 			Image image = toolkit.getImage(resource);
-			// frame.setIconImage(image);
 			list.add(image);
 		}
 		frame.setIconImages(list);
@@ -114,8 +113,6 @@ public class Starry {
 			(size.width  - WIDTH ) / 2,
 			(size.height - HEIGHT) / 2);
 		frame.setVisible(true);
-		
-		Platform.runLater(() -> createApp(panel));
 	}
 	
 	void resizeBy(int w, int h) {
@@ -163,21 +160,47 @@ public class Starry {
 	void createApp(JFXPanel panel) {
 		page = new WebView();
 		Scene scene = new Scene(page);
-		// TODO: Check this
-		scene.getStylesheets().add("app.css");
+		scene.getStylesheets().add("starry/app.css");
 		panel.setScene(scene);
 	}
 	
-	void loadPage(String file) {
-		loadFile(file);
-		URL url = getClass().getClassLoader().getResource("main.css");
-		page.getEngine().setUserStyleSheetLocation(url.toString());
+	ReadyFunction readyFunction;
+	
+	public void whenReady(ReadyFunction r) {
+		readyFunction = r;
 	}
 	
-	public void loadContent(String content) {
-		page.getEngine().loadContent(content);
+	void setup() {
+		page.getEngine()
+			.getLoadWorker()
+			.stateProperty()
+			.addListener((value, last, current) -> {
+				if (current == Worker.State.SUCCEEDED) {
+					System.out.println("ready");
+					if (readyFunction == null) return;
+					readyFunction.run();
+				}
+			});
+	}
+	
+	/**
+	 * Forwards to page.getEngine().loadContent()
+	 * 
+	 */
+	public void loadString(String content) {
+		Platform.runLater(() -> {
+			createApp(panel);
+			page.getEngine().loadContent(content);
+			URL url = getClass().getClassLoader().getResource("main.css");
+			page.getEngine().setUserStyleSheetLocation(url.toString());
+			setup();
+		});
 	}
 
+	/**
+	 * Reads file content from resource, and display as the main view.
+	 * 
+	 */
 	public void loadFile(String file) {
 		InputStream input = getClass()
 							.getClassLoader()
@@ -191,7 +214,86 @@ public class Starry {
 				buffer += (char)k;
 			}
 		} catch (Exception e) { }
-		loadContent(buffer);
+		loadString(buffer);
+	}
+	
+	/**
+	 * Forwards to page.getEngine().load()
+	 * 
+	 */
+	public void loadURL(String location) {
+		Platform.runLater(() -> {
+			createApp(panel);
+			page.getEngine().load(location);
+			setup();		
+		});
+	}
+	
+	/**
+	 * A helper method to add the "click" event handler
+	 */
+	public void setAction(String selector, EventListener listener) {
+		Document document = page.getEngine().getDocument();
+		if (document == null) return;
+		
+		Element element = document.getElementById(selector);
+		if (element == null) return;
+		
+		EventTarget target = (EventTarget)element;
+		target.addEventListener("click", listener, false);
+	}
+	
+	/**
+	 * Forwards to getElementById()
+	 * @param identifier
+	 * @return 
+	 */
+	public Element getElement(String identifier) {
+		return page.getEngine()
+				.getDocument()
+				.getElementById(identifier);
+	}
+	
+	/**
+	 * Forwards to document.createElement()
+	 * 
+	 */
+	public Element createElement(String tag) {
+		return page.getEngine()
+				.getDocument()
+				.createElement(tag);
+	}
+	
+	/**
+	 * Forwards to executeScript()
+	 * 
+	 */
+	public void executeScript(String script) {
+		page.getEngine().executeScript(script);
+	}
+	
+	/**
+	 * Forwards to setTextContent()
+	 * 
+	 */
+	public void setText(String selector, String text) {
+		Platform.runLater( () -> {
+			var element = getElement(selector);
+			if (element == null) return;
+			
+			try {
+				element.setTextContent(text);
+			} catch (Exception e) { }
+		});
+	}
+
+	/**
+	 * Helper method to prevent using !=
+	 * @param o
+	 * @return 
+	 */
+	boolean valid(Object o) {
+		return o != null;
 	}
 	
 }
@@ -296,4 +398,5 @@ class MouseClick extends MouseAdapter {
 		c.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
 		Starry.instance.resizeBy(0,0);
 	}
+	
 }
