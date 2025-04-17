@@ -256,36 +256,25 @@ public class Start {
 ```
 ![](photo/starry-to-do.png)
 
-Refreshing Dynamically (TODO: Update this code)
+Additional sample code with reloadable command.
+
 ```java
-import starry.StarryApp;
-
-public class Start extends StarryApp {
-	
-	public void main() {
-		loadFile("code/main.html");
-	}
-	
-	public void setup() {
-		setAction("refresh", e -> main() );
-	}
-}
-```
-
-Additional Sample Code
-```
 import starry.Starry;
-import org.w3c.dom.events.Event;
 
 public class Start {
 	public static void main(String[] data) {
-		Starry app = new Starry();
+		new Start().reload();
+	}
+	
+	Starry app = new Starry();
+	
+	void reload() {
 		app.loadFile("main.html");
-		app.whenReady( () -> setup(app) );
+		app.whenReady( () -> setup() );
 	}
 
-	static void setup(Starry app) {
-		app.setAction("refresh", Start::showRefresh);
+	void setup() {
+		app.setAction("refresh",     e -> reload() );
 		app.setAction("love-button", e -> System.out.println("Love") );
 		app.setAction("hate-button", e -> System.out.println("Hate") );
 
@@ -297,10 +286,6 @@ public class Start {
 
 		app.setText("report-arch", arch);
 		app.setText("report-os", os);
-	}
-	
-	static void showRefresh(Event e) {
-		System.out.println("Refreshing");
 	}
 }
 ```
