@@ -4,9 +4,10 @@ import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
+import javax.swing.JComponent;
 import javax.swing.JPanel;
 
-public class Outer extends JPanel {
+public class Outer extends JComponent {
 	public Outer() {
 		super();
 		addMouseListener(new MouseClick());
@@ -24,6 +25,7 @@ public class Outer extends JPanel {
 		g2d.setRenderingHint(
 			RenderingHints.KEY_ANTIALIASING,
 			RenderingHints.VALUE_ANTIALIAS_ON);
+
 		if (Starry.operatingSystem.equals("Linux")) {
 			g2d.setColor(colorLinux);
 		}
@@ -32,6 +34,8 @@ public class Outer extends JPanel {
 			g2d.setColor(color);
 		}
 		
+		// g2d.setPaint(new java.awt.Color(0,0,0,0));
+	
 		Dimension pref = getPreferredSize();
 		g2d.fillRoundRect(1, 1, 
 				pref.width - 2, pref.height - 2, 

@@ -55,7 +55,7 @@ public class Starry {
 		
 		ArrayList<Image> list = new ArrayList<>();
 		Toolkit toolkit = Toolkit.getDefaultToolkit();
-		String[] icons = {"icon-128.png",
+		String[] icons = {  "icon-128.png",
 							"icon-64.png",
 							"icon-32.png",
 							"icon-24.png",
@@ -77,7 +77,7 @@ public class Starry {
 		outer = new Outer();
 		outer.setLayout(null);
 		frame.setContentPane(outer);
-		
+
 		// For Linux
 		if (operatingSystem.equals("Linux")) {
 			frame.setShape(new RoundRectangle2D
@@ -95,7 +95,7 @@ public class Starry {
 						WIDTH, HEIGHT,
 						OUTER_RADIUS, OUTER_RADIUS));
 			frame.setBackground(new java.awt.Color(0,0,0,0));
-		}
+		}		
 		
 		Dimension wd = new Dimension(
 							WIDTH  - 2 * WRAPPER_PAD,
@@ -148,7 +148,7 @@ public class Starry {
 		// For Ubuntu / GNOME
 		if (operatingSystem.equals("Linux")) {
 			frame.setShape(new RoundRectangle2D
-				.Double(1, 1,
+					.Double(1, 1,
 					od.width - 2, od.height - 2,
 					OUTER_RADIUS + 2, OUTER_RADIUS + 2));
 		}
@@ -163,7 +163,7 @@ public class Starry {
 		
 		SwingUtilities.invokeLater( () -> {
 			frame.pack();
-			// frame.revalidate();
+			frame.revalidate();
 		});
 	}
 	
@@ -186,7 +186,6 @@ public class Starry {
 			.stateProperty()
 			.addListener((value, last, current) -> {
 				if (current == Worker.State.SUCCEEDED) {
-					System.out.println("ready");
 					if (readyFunction == null) return;
 					readyFunction.run();
 				}
@@ -429,5 +428,6 @@ class MouseClick extends MouseAdapter {
 		c.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
 		Starry.instance.resizeBy(0,0);
 	}
-	
+
 }
+
