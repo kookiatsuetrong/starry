@@ -17,7 +17,7 @@ public class Outer extends JComponent {
 	}
 	
 	java.awt.Color color = new java.awt.Color(0,0,0,128);
-	java.awt.Color colorLinux = new java.awt.Color(196,196,196);
+	java.awt.Color colorLinux = new java.awt.Color(128,128,128);
 	
 	@Override
 	protected void paintComponent(Graphics g) {
@@ -27,6 +27,7 @@ public class Outer extends JComponent {
 			RenderingHints.VALUE_ANTIALIAS_ON);
 
 		if (Starry.operatingSystem.equals("Linux")) {
+			g2d.setBackground(new java.awt.Color(255,0,0));
 			g2d.setColor(colorLinux);
 		}
 		if (Starry.operatingSystem.equals("Linux") == false) {
@@ -42,4 +43,3 @@ public class Outer extends JComponent {
 				Starry.OUTER_RADIUS, Starry.OUTER_RADIUS);
 	}
 }
-
